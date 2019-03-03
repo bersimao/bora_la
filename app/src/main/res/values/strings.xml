@@ -1,0 +1,63 @@
+<resources>
+    <string name="app_name">Bora-Lá</string>
+
+    <string name="log_link_senha">Esqueci minha senha!</string>
+    <string name="log_bt_entrar">Entrar</string>
+    <string name="log_bt_cadastrar">Cadastre-se no BORA-LÁ</string>
+    <string name="log_tex_email">Email</string>
+    <string name="log_tex_senha">Senha</string>
+    <string name="log_tex_exibir">exibir</string>
+    <string name="log_tex_titulo">Seja bem vindo</string>
+    <string name="log_tex_titulo_borala">BORA-LÁ</string>
+
+    <string name="esq_bt_continuar">Continuar</string>
+    <string name="esq_text">Digite seu CPF para receber uma nova senha por SMS.</string>
+    <string name="esq_text_cpf">CPF</string>
+    <string name="esq_text_titulo">Esqueci minha Senha</string>
+
+    <string name="cad_text_titulo">Cadastro</string>
+    <string name="cad_text_subtitulo_dp">Dados pessoais</string>
+    <string name="cad_text_name">Nome</string>
+    <string name="cad_text_sobrenome">Sobrenome</string>
+    <string name="cad_text_cpf">CPF</string>
+    <string name="cad_text_nasc">Nascimento</string>
+    <string name="cad_radioBt_fem">Feminino</string>
+    <string name="cad_radioBt_mas">Masculino</string>
+    <string name="cad_text_subtitulo_cont">Contatos</string>
+    <string name="cad_text_tel">Telefone (ddd + número)</string>
+    <string name="cad_text_email">E-mail</string>
+    <string name="cad_text_conf_email">Confirmação de E-mail</string>
+    <string name="cad_text_subtitulo_acesso">Acesso</string>
+    <string name="cad_text_senha">Senha (utilize de 6 a 10 caracteres</string>
+    <string name="cad_text_exibir">exibir</string>
+    <string name="cad_text_conf_senha">Confirmação de senha</string>
+    <string name="cad_text_info">Sua senha precisa ter de 6 a 10 caracteres, sendo uma letra maiúscula, uma minúscula e um número. Não vale caracteres especiais.</string>
+    <string name="cad_text_checkbox_sms_email">Desejo receber os valores referente a carona por SMS e e-mail.</string>
+    <string name="cad_text_checkbox_contrato">Li e estou de acordo com os termos de uso e a política de privacidade do Bora-lá.</string>
+    <string name="cad_text_bt">Pronto!</string>
+
+    <string name="gp_text_titulo">Grupos de Carona</string>
+
+    <string name="ngp_text_titulo">Novo Grupo de Carona</string>
+    <string name="ngp_text_subtitulo">Descrição do Grupo</string>
+    <string name="ngp_text_bt">Salvar</string>
+
+    <string name="cardia_text_titulo">Carona do Dia</string>
+
+    <string name="diaatual_text_titulo">Dia Atual</string>
+    <string name="diaatual_text_subtitulo">Caroneiros</string>
+    <string name="diaatual_text_bt_traj">Trajetos</string>
+    <string name="diaatual_text_bt_mps">Mapas</string>
+    <string name="diaatual_text_bt_rel">Relatório</string>
+    <string name="diaatual_text_perg">   Irá no dia de hoje?</string>
+
+
+    <string name="title_activity_main">MainActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Bernardo Simão</string>
+    <string name="nav_header_subtitle">bersimao@gmail.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Configurações</string>
+    <string name="title_activity_maps">Map</string>
+</resources>

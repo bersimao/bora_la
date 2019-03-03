@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CaroneiroIdaVolta">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Caroneiro(a)" />
+
+        <TextView
+            android:id="@+id/caroneiro_nome_pesquisa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nome do Caroneiro" />
+
+        <ListView
+            android:id="@+id/list_view_ida_volta_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </ListView>
+
+        <RadioGroup
+            android:id="@+id/radio_ida_volta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/button_salvar_ida_volta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Salvar" />
+
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

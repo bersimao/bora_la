@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/gradient_background">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:textColor="@color/colorLetraTitulo"
+        android:text="Cadastro do Trajeto"
+        android:id="@+id/txtTitle" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="52dp">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:background="@color/colorButton"
+            android:fontFamily="@font/nunito_regular"
+            android:textColor="@color/colorLetraBt"
+            android:text="Voltar"
+            android:id="@+id/btnBtmLeft"
+            android:layout_gravity="left"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+</LinearLayout>

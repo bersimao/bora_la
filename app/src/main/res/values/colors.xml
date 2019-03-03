@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ff7970</color>
+    <color name="colorPrimaryDark">#ff973e</color>
+    <color name="colorAccent">#f2cc8a</color>
+    <color name="colorFundoPadrao">#666666</color>
+    <color name="colorLetraTitulo">#FDFEFE</color>
+    <color name="colorLetraBt">#ff7970</color>
+    <color name="colorButton">#FDFEFE</color>
+    <color name="colorInfoText">#fdfefe</color>
+</resources>
