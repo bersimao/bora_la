@@ -32,7 +32,13 @@ import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
+import org.joda.time.DateMidnight;
+import org.joda.time.DateTime;
+
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -40,6 +46,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+
+import static java.time.Month.JANUARY;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
+
 // TELA INICIAL DO GRUPO DE CARONA SELECIONADO
 public class DiaAtual extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -56,7 +67,7 @@ public class DiaAtual extends AppCompatActivity
     ListView caroneirosListView;
 
 
-//============== MÉTODOS DA GAVETA LATERAL ============= INÍCIO
+    //============== MÉTODOS DA GAVETA LATERAL ============= INÍCIO
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_dia_atual);
@@ -134,11 +145,12 @@ public class DiaAtual extends AppCompatActivity
         startActivity(intent);
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer_dia_atual);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_dia_atual);
+        Toolbar toolbar = findViewById(R.id.toolbar_dia_atual);
         setSupportActionBar(toolbar);
         setTitle("Bora-lá");
 
@@ -176,6 +188,7 @@ public class DiaAtual extends AppCompatActivity
         dataAtual.setText(formattedDate);
 
         CalendarView calendarView = findViewById(R.id.calendarView1);
+
 
 // QUERY PARA ENCONTRAR OS CARONEIROS DO GRUPO
         final ParseQuery<ParseObject> query = ParseQuery.getQuery("GrupoCarona");
@@ -220,6 +233,9 @@ public class DiaAtual extends AppCompatActivity
                 }
             }
         });
+
+
+
 
 // TRATAMENTO DAS DATAS DO CALENDÁRIO
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -376,4 +392,5 @@ public class DiaAtual extends AppCompatActivity
         });
 */
     }
+
 }

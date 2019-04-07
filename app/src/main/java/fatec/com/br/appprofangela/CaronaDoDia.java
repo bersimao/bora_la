@@ -49,7 +49,7 @@ public class CaronaDoDia extends AppCompatActivity
 
     String calendarioDia, dia, mes, ano, DataId, grupoAtivo;
 
-//============== MÉTODOS DA GAVETA LATERAL ============= INÍCIO
+    //============== MÉTODOS DA GAVETA LATERAL ============= INÍCIO
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_carona_do_dia);
@@ -155,6 +155,14 @@ public class CaronaDoDia extends AppCompatActivity
         caroneirosList = intent.getStringArrayListExtra("caroneirosList");
 
         calendarioDia = ano + mes + dia;
+
+/*
+        try {
+            RecurringDates.rrule(ano+"-"+mes+"-"+dia);
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+*/
 
         diaCarona.setText(dia + "/ " + mes + "/ " + ano);
 

@@ -21,6 +21,24 @@
         <ListView
             android:id="@+id/list_view_dias_semana"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content" />
+
+        <!--BOTAO FLUTUANTE        <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/floatingActionButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    app:srcCompat="@android:drawable/ic_menu_add" />
+        -->
+
+        <Button
+            android:id="@+id/button_adicionar_novo_trajeto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:gravity="bottom|end"
+            android:text="Novo Trajeto" />
+
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
