@@ -39,20 +39,33 @@ import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.google.maps.DirectionsApi;
+import com.google.maps.GeoApiContext;
+import com.google.maps.errors.ApiException;
+import com.google.maps.model.DirectionsResult;
+import com.google.maps.model.TravelMode;
 import com.parse.ParseUser;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import scala.util.regexp.Base;
 
 public class Trajetos extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
-    String recorrencia = "";
+    private static final int overview = 0;
+
+    String recorrencia = "", motorista = "";
     EditText editTextLocalInicial, editTextNomeTrajeto;
     Button buttonSalvarTrajetos, buttonCancelarTrajetos, buttonAdicionarDestino, buttonOutraRecorrencia;
     ImageButton imgBtnPesqLocalInicial;
@@ -107,18 +120,13 @@ public class Trajetos extends AppCompatActivity
 
                 CheckedTextView checkedTextView = (CheckedTextView) view;
 
-
                 if (checkedTextView.isChecked()){
 
                     BaseActivity.participantes.add(participantesArray.get(position));
-
-
                 } else {
 
                     BaseActivity.participantes.remove(participantesArray.get(position));
-
                 }
-
             }
         });
 
@@ -150,7 +158,6 @@ public class Trajetos extends AppCompatActivity
 
                         sb.append(" - ");
                     }
-
                 }
                 Log.i("TRAJETOS-SB", sb.toString());
 
@@ -192,8 +199,6 @@ CAIXA DE DIALOGO -> FIM */
         //TESTE SPINNER DOS MOTORISTAS
         String[] spinnerMotoristas = new String[]{"Bernardo", "Jaime"};
 
-        Log.i("CXDIALOGO 4.2", BaseActivity.participantes.toString());
-
         //final Context context = Trajetos.this;  //Context para a CAIXA DE DIÁLOGO
 
         participantesListView = findViewById(R.id.list_view_trajetos_participantes);
@@ -223,7 +228,7 @@ CAIXA DE DIALOGO -> FIM */
             //showMyDialog(context); MOSTRA A CAIXA DE DIÁLOGO
         }
 
-        if (BaseActivity.participantes.isEmpty() && BaseActivity.enderecoDestino.isEmpty()){
+        if (BaseActivity.participantesAA.isEmpty() && BaseActivity.enderecoDestino.isEmpty()){
 
             Log.i("TRAJETOS", "localInicial = vazio");
 
@@ -241,11 +246,13 @@ CAIXA DE DIALOGO -> FIM */
 
         } else {
 
-            for(int i = 0; i < BaseActivity.participantes.size(); i++){
+            for(int i = 0; i < BaseActivity.participantesAA.size(); i++){
 
                 Map<String, String> dataInfo = new HashMap<String, String>();
 
-                dataInfo.put("participantes", BaseActivity.participantes.get(i));
+                String s = BaseActivity.participantesAA.get(i).toString();
+
+                dataInfo.put("participantes", s.substring(1, s.length() -1)); //Remove as chaves "[]" do array convertido em string.
 
                 dataInfo.put("trajetos", BaseActivity.enderecoDestino.get(i));
 
@@ -307,24 +314,125 @@ CAIXA DE DIALOGO -> FIM */
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(Trajetos.this, "Motorista: " + dropdownMotoristas.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
-
                 int selectedId = radioGroupRecorrencia.getCheckedRadioButtonId();
-
                 radioButton = findViewById(selectedId);
+                //JSONObject partJsonObject = new JSONObject();
+                JSONArray jsonArray = new JSONArray();
 
-                recorrencia = radioButton.getText().toString();
+                if (radioButton == null || BaseActivity.localInicial.equals("") || BaseActivity.enderecoDestino.isEmpty()){
 
-                setRecorrencia(recorrencia);
+                    Toast.makeText(Trajetos.this, "Você não inseriu todas as informações necessárias", Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(Trajetos.this, DiasSemana.class);
+                } else {
 
-                startActivity(intent);
+                    String origin = BaseActivity.localInicial;
+                    String destiny = BaseActivity.enderecoDestino.get(0);
+                    recorrencia = radioButton.getText().toString();
+                    motorista = dropdownMotoristas.getSelectedItem().toString();
 
-                //Log.i("Trajetos-LocIni", BaseActivity.localInicial);
-                //Log.i("Trajetos-Particip", BaseActivity.participantes.toString());
-                //Log.i("Trajetos-Destinos", BaseActivity.enderecoDestino.toString());
-                //Log.i("Trajetos-RadioBtn", setRecorrencia(recorrencia));
+                    DirectionsResult results = getDirectionsDetails(origin,destiny, TravelMode.DRIVING);
+
+                    //getEndLocationTitle(results);
+
+                    if (results != null){
+
+                        JSONObject mainJsonObject = new JSONObject();
+                        JSONObject partJsonObject = new JSONObject();
+
+                        for(int i = 0; i < BaseActivity.participantesAA.size(); i++){
+
+                            try {
+                                partJsonObject.put("nome", BaseActivity.participantesAA.get(i));
+                                partJsonObject.put("recorrencia", recorrencia);
+
+                            } catch (JSONException e){
+
+                                e.printStackTrace();
+                            }
+                        }
+
+                        try {
+                            mainJsonObject.put("ID", 1);
+                            mainJsonObject.put("motorista", motorista);
+                            mainJsonObject.put("origem", origin);
+                            mainJsonObject.put("destino", destiny);
+                            mainJsonObject.put("km", getEndLocationTitle(results));
+                            mainJsonObject.put("participantes", partJsonObject);
+                            jsonArray.put(mainJsonObject);
+
+                        } catch (JSONException e){
+
+                            e.printStackTrace();
+                        }
+                        //Log.i("Trajeto_SAVE3.2", mainJsonObject.toString());
+
+                        Log.i("Trajeto_SAVE3.1", jsonArray.toString());
+
+                        Log.i("Trajeto_SAVE_R", getEndLocationTitle(results));
+
+                        if(BaseActivity.enderecoDestino.size() > 1){
+
+                            for(int i = 0; i < (BaseActivity.enderecoDestino.size()-1); i++){
+
+                                String origem = BaseActivity.enderecoDestino.get(i);
+                                String destino = BaseActivity.enderecoDestino.get(i+1);
+                                DirectionsResult results2 = getDirectionsDetails(origem,destino, TravelMode.DRIVING);
+                                JSONObject mainJsonObject2 = new JSONObject();
+                                JSONObject partJsonObject2 = new JSONObject();
+
+                                for(int y = 0; y < BaseActivity.participantesAA.size(); y++){
+
+                                    try {
+                                        partJsonObject2.put("nome", BaseActivity.participantesAA.get(i));
+                                        partJsonObject2.put("recorrencia", recorrencia);
+
+
+                                    } catch (JSONException e){
+
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                try {
+                                    mainJsonObject2.put("ID", i+2);
+                                    mainJsonObject2.put("motorista", motorista);
+                                    mainJsonObject2.put("origem", origem);
+                                    mainJsonObject2.put("destino", destino);
+                                    mainJsonObject2.put("km", getEndLocationTitle(results));
+                                    mainJsonObject2.put("participantes", partJsonObject2);
+                                } catch (JSONException e){
+
+                                    e.printStackTrace();
+                                }
+
+                                jsonArray.put(mainJsonObject2);
+
+                                //getEndLocationTitle(results2);
+
+                                Log.i("Trajeto_SAVE2", getEndLocationTitle(results2));
+                            }
+                        }
+
+                        Log.i("Trajeto_ArrArr", BaseActivity.participantesAA.toString());
+
+                        Log.i("Trajeto_SAVE3", jsonArray.toString());
+
+                        setRecorrencia(recorrencia);
+
+                        Intent intent = new Intent(Trajetos.this, DiasSemana.class);
+
+                        startActivity(intent);
+
+                        //Log.i("Trajetos-LocIni", BaseActivity.localInicial);
+                        //Log.i("Trajetos-Particip", BaseActivity.participantes.toString());
+                        //Log.i("Trajetos-Destinos", BaseActivity.enderecoDestino.toString());
+                        //Log.i("Trajetos-RadioBtn", setRecorrencia(recorrencia));
+                    } else {
+
+                        Toast.makeText(Trajetos.this, "Ocorreu um erro, verifique os endereços inseridos e tente novamente.", Toast.LENGTH_SHORT).show();
+
+                    }
+                }
             }
         });
 
@@ -459,4 +567,60 @@ CAIXA DE DIALOGO -> FIM */
         return true;
     }
     //============== MÉTODOS PARA A DRAWER ============== FIM
+
+    private String getKey(){
+
+        String mapsKey = getText(R.string.google_maps_api_key).toString();
+        return  mapsKey;
+    }
+
+    private DirectionsResult getDirectionsDetails(String orign, String destination, TravelMode mode){
+        /*AndroidThreeTen.init(context); //Instancia do ThreeTen Android Backport, que permite utilizar os métodos do LocalDate em API's
+                                        //mais antigas que a 26.
+
+        //Instant now = Instant.now(); //Otra forma de pegar a data atual, porém mostra o dia e hora UTC.
+        LocalDate date = LocalDate.parse("9999-12-31");
+        Instant instant = date.atStartOfDay(ZoneId.of("America/Sao_Paulo")).toInstant();
+        Log.i("DirectionsAPI5",instant.toString());*/
+        try{
+            return DirectionsApi.newRequest(getGeoContext())
+                    .mode(mode)
+                    .origin(orign)
+                    .destination(destination)
+                    .departureTimeNow()
+                    .await();
+
+        } catch (ApiException e){
+            e.printStackTrace();
+            Log.i("DirectionsAPI1",e.toString());
+            return null;
+        } catch (InterruptedException e){
+            Log.i("DirectionsAPI2",e.toString());
+            e.printStackTrace();
+            Log.i("DirectionsAPI3",e.toString());
+            return null;
+
+        } catch (IOException e){
+            Log.i("DirectionsAPI4",e.toString());
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private String getEndLocationTitle(DirectionsResult results){
+        return  /*"Time :"+ results.routes[overview].legs[overview].duration.humanReadable + " Distance :" +*/ results.routes[overview].legs[overview].distance.humanReadable;
+    }
+
+    private GeoApiContext getGeoContext() {
+        GeoApiContext geoApiContext = new GeoApiContext.Builder()
+                .queryRateLimit(3)
+                .apiKey(getKey())
+                .connectTimeout(3, TimeUnit.SECONDS)
+                .readTimeout(3, TimeUnit.SECONDS)
+                .writeTimeout(3, TimeUnit.SECONDS)
+                .build();
+        return geoApiContext;
+    }
+
+
 }

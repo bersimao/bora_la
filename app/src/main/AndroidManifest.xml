@@ -16,7 +16,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CaixaDialogo"></activity>
+        <activity
+            android:name=".CaixaDialogo"
+            android:theme="@style/Theme.CaixaDialogo"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -36,7 +40,6 @@
         <activity android:name=".Carregamento">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -73,6 +76,7 @@
         <activity android:name=".AdicionaCaroneiro" />
         <activity android:name=".CaroneiroIdaVolta" />
         <activity android:name=".RelatorioDias" />
+
     </application>
 
 </manifest>

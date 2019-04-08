@@ -20,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import scala.util.regexp.Base;
 
@@ -128,19 +130,19 @@ public class CaixaDialogo extends AppCompatActivity {
 
                     sb.setLength(0);
 
-                    for (int i = 0; i < BaseActivity.participantesTemp.size(); i++){
+                    ArrayList<String> list = new ArrayList<>();
 
-                        sb.append(BaseActivity.participantesTemp.get(i));
+                    BaseActivity.participantesAA.add(list); //a Adição da lista tem que ocorrer antes, pois o que é adicionado ao participantesAA é a referencia da lista, que depois é alimentada com os valores.
 
-                        if(i != (BaseActivity.participantesTemp.size() - 1)){
+                    for(int i = 0; i < BaseActivity.participantesTemp.size(); i++){
 
-                            sb.append(" - ");
-                        }
+                        list.add(BaseActivity.participantesTemp.get(i));
+
                     }
-                    BaseActivity.participantes.add(sb.toString());
 
                     BaseActivity.enderecoDestino.add(BaseActivity.enderecoDestinoTemp);
-
+                    Log.i("CXDIALOGO_endDest", BaseActivity.enderecoDestino.toString());
+                    Log.i("CXDIALOGO_ArrArr", BaseActivity.participantesAA.toString());
                     Intent intent = new Intent(CaixaDialogo.this, Trajetos.class);
 
                     startActivity(intent);

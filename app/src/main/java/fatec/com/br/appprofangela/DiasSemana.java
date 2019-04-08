@@ -64,7 +64,7 @@ public class DiasSemana extends AppCompatActivity {
 
                 BaseActivity.nomeTrajeto = "";
 
-                BaseActivity.participantes.clear();
+                BaseActivity.participantesAA.clear();
 
                 BaseActivity.participantesTemp.clear();
 

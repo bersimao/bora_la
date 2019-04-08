@@ -30,9 +30,9 @@ public class BaseActivity extends AppCompatActivity {
 
     public static Integer opcaoShowDialog = 0;
 
-    public static ArrayList<String> participantesTemp = new ArrayList<>();
+    public static ArrayList<ArrayList<String>> participantesAA = new ArrayList<>();
 
-    public static ArrayList<String> participantes = new ArrayList<>();
+    public static ArrayList<String> participantesTemp = new ArrayList<>();
 
     public static void buscaCaroneirosGrupo (String grupoId){
 

@@ -156,22 +156,7 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback {
                     @Override
                     public void onClick(View v) {
 
-                        DirectionsResult results = getDirectionsDetails("São José dos Campos, São Paulo, Brasil",place.getAddress(),TravelMode.DRIVING);
-
-                        getEndLocationTitle(results);
-
-                        if(results != null){
-
-                            Log.i("DirectionsAPI-YES", getEndLocationTitle(results));
-
-                        } else {
-
-                            Log.i("DirectionsAPI-NO", "null");
-                        }
-
-
                         Log.i("MapsLOG2", markerOptions.title(nome).toString());
-
 
                         Log.i("MapsLOG", place.getAddress());
 
@@ -262,16 +247,18 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback {
         }
     }
 
+
+    //DIRECTIONS METHODS
+    /*
     private DirectionsResult getDirectionsDetails(String orign, String destination, TravelMode mode){
 
-        //Instant now = Instant.now(); Otra forma de pegar a data atual, porém mostra o dia e hora UTC.
+        //AndroidThreeTen.init(context); //Instancia do ThreeTen Android Backport, que permite utilizar os métodos do LocalDate em API's
+                                        //mais antigas que a 26.
 
-        LocalDate date = LocalDate.parse("9999-12-31");
-        Instant instant = date.atStartOfDay(ZoneId.of("America/Sao_Paulo")).toInstant();
-
-
-
-        Log.i("DirectionsAPI5",instant.toString());
+        //Instant now = Instant.now(); //Otra forma de pegar a data atual, porém mostra o dia e hora UTC.
+        //LocalDate date = LocalDate.parse("9999-12-31");
+        //Instant instant = date.atStartOfDay(ZoneId.of("America/Sao_Paulo")).toInstant();
+        //Log.i("DirectionsAPI5",instant.toString());
 
         try{
             return DirectionsApi.newRequest(getGeoContext())
@@ -314,6 +301,7 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback {
                 .build();
         return geoApiContext;
     }
+    */
 
 }
 
