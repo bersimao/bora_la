@@ -8,4 +8,5 @@
     <color name="colorLetraBt">#ff7970</color>
     <color name="colorButton">#FDFEFE</color>
     <color name="colorInfoText">#fdfefe</color>
+    <color name="colorWhite">#ffffff</color>
 </resources>
