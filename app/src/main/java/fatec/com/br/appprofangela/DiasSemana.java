@@ -45,19 +45,46 @@ public class DiasSemana extends AppCompatActivity {
 
         diasSemanaListView.setAdapter(arrayAdapter);
 
-
-        //CÓDIGO PARA ADICIONAR UMA AÇÃO NO DIA DA SEMANA SELECIONADO
-/*
         diasSemanaListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String diaSemana = diasSemana.get(position);
-                Intent diaSemanaSelecionado = new Intent(DiasSemana.this, Trajetos.class);
+                //String diaSemana = diasSemana.get(position);
+
+                String diaSemana = "";
+
+                switch (position){
+                    case 0:
+                        diaSemana = "MO";
+                        break;
+                    case 1:
+                        diaSemana = "TU";
+                        break;
+                    case 2:
+                        diaSemana = "WE";
+                        break;
+                    case 3:
+                        diaSemana = "TH";
+                        break;
+                    case 4:
+                        diaSemana = "FR";
+                        break;
+                    case 5:
+                        diaSemana = "SA";
+                        break;
+                    case 6:
+                        diaSemana = "SU";
+                        break;
+                    default:
+                        diaSemana = "";
+                        break;
+                }
+
+                Intent diaSemanaSelecionado = new Intent(DiasSemana.this, DiaSemanaSelecionado.class);
                 diaSemanaSelecionado.putExtra("diaSemana", diaSemana);
                 startActivity(diaSemanaSelecionado);
             }
         });
-*/
+
         buttonNovoTrajeto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,6 +100,8 @@ public class DiasSemana extends AppCompatActivity {
                 BaseActivity.enderecoDestinoTemp = "";
 
                 BaseActivity.localInicial = "";
+
+                BaseActivity.situacaoRadioGroupRecorrencia = 1;
 
                 Intent novoTrajeto = new Intent(DiasSemana.this, Trajetos.class);
 

@@ -14,9 +14,11 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
-import scala.util.parsing.combinator.testing.Str;
+//import scala.util.parsing.combinator.testing.Str;
 
 public class BaseActivity extends AppCompatActivity {
+
+    public static String dataSelecionadaCalendario = "";
 
     public static ArrayList<String> caroneirosDoGrupo = new ArrayList<>();
 
@@ -33,6 +35,14 @@ public class BaseActivity extends AppCompatActivity {
     public static ArrayList<ArrayList<String>> participantesAA = new ArrayList<>();
 
     public static ArrayList<String> participantesTemp = new ArrayList<>();
+
+    public static int situacaoRadioGroupRecorrencia = 1;
+
+    public static String grupoSelecionadoId = "";
+
+    //public static String freqParse = "";
+
+    //public static List<String> listDiasDaSemanaParse = new ArrayList<>();
 
     public static void buscaCaroneirosGrupo (String grupoId){
 

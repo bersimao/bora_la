@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -44,7 +45,11 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.TravelMode;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,24 +63,27 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import scala.util.regexp.Base;
+//import scala.util.regexp.Base;
 
 public class Trajetos extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
     private static final int overview = 0;
 
-    String recorrencia = "", motorista = "";
+    String motorista = "", resumoRecorrendia = "", freq = "", interval = "";
     EditText editTextLocalInicial, editTextNomeTrajeto;
     Button buttonSalvarTrajetos, buttonCancelarTrajetos, buttonAdicionarDestino, buttonOutraRecorrencia;
+    TextView textViewResumoRecorrencia;
     ImageButton imgBtnPesqLocalInicial;
     ListView participantesListView;
     List<Map<String, String>> participantesData = new ArrayList<Map<String, String>>();
+    ArrayList<String> byday = new ArrayList<>();
     ArrayAdapter arrayAdapterSpinner;
     SimpleAdapter simpleAdapter;
     RadioGroup radioGroupRecorrencia;
     RadioButton radioButton;
     Spinner dropdownMotoristas;
+
 
 
 /*  CAIXA DE DIALOGO -> INICIO
@@ -205,6 +213,7 @@ CAIXA DE DIALOGO -> FIM */
         radioGroupRecorrencia = findViewById(R.id.radio_group_recorrencia);
         editTextLocalInicial = findViewById(R.id.edit_text_endereco_local_inicial);
         editTextNomeTrajeto = findViewById(R.id.edit_text_nome_trajeto);
+        textViewResumoRecorrencia = findViewById(R.id.textView_resumo_recorrencia);
         buttonSalvarTrajetos = findViewById(R.id.button_salvar_trajetos);
         buttonCancelarTrajetos = findViewById(R.id.button_cancelar_trajetos);
         imgBtnPesqLocalInicial = findViewById(R.id.imageButton_pesq_local_inicial);
@@ -295,18 +304,26 @@ CAIXA DE DIALOGO -> FIM */
             }
         });
 
+        if(BaseActivity.situacaoRadioGroupRecorrencia == 0){
+
+            for (int i = 0; i < radioGroupRecorrencia.getChildCount(); i++) {
+                radioGroupRecorrencia.getChildAt(i).setEnabled(false);
+            }
+
+            Intent intent = getIntent();
+
+            resumoRecorrendia = intent.getStringExtra("resumoRecorrencia");
+
+            textViewResumoRecorrencia.setText(resumoRecorrendia);
+        }
+
         buttonOutraRecorrencia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                int selectedId = radioGroupRecorrencia.getCheckedRadioButtonId();
+                Intent intent = new Intent(Trajetos.this, Recorrencia.class);
 
-                radioButton = findViewById(selectedId);
-
-                recorrencia = radioButton.getText().toString();
-
-                Toast.makeText(Trajetos.this, "Recorr.: " + setRecorrencia(recorrencia), Toast.LENGTH_SHORT).show();
-
+                startActivity(intent);
             }
         });
 
@@ -314,119 +331,268 @@ CAIXA DE DIALOGO -> FIM */
             @Override
             public void onClick(View v) {
 
-                int selectedId = radioGroupRecorrencia.getCheckedRadioButtonId();
-                radioButton = findViewById(selectedId);
-                //JSONObject partJsonObject = new JSONObject();
-                JSONArray jsonArray = new JSONArray();
+                ArrayList<ParseObject> arrayListTrajetos = new ArrayList<>();
 
-                if (radioButton == null || BaseActivity.localInicial.equals("") || BaseActivity.enderecoDestino.isEmpty()){
+                int selectedId = radioGroupRecorrencia.getCheckedRadioButtonId();
+
+                radioButton = findViewById(selectedId);
+
+                //JSONArray jsonMainArray = new JSONArray();
+
+                if ((radioButton == null && BaseActivity.situacaoRadioGroupRecorrencia == 1) || BaseActivity.localInicial.equals("") || BaseActivity.enderecoDestino.isEmpty()){
 
                     Toast.makeText(Trajetos.this, "Você não inseriu todas as informações necessárias", Toast.LENGTH_SHORT).show();
 
                 } else {
 
+                    if (radioButton == null && BaseActivity.situacaoRadioGroupRecorrencia == 0){
+
+                        Intent intent = getIntent();
+
+                        freq = intent.getStringExtra("freqRecorrencia");
+
+                        interval = intent.getStringExtra("intervalRecorrencia");
+
+                        byday = (ArrayList<String>)getIntent().getSerializableExtra("bydayRecorrencia");
+
+                    } else {
+
+                        freq = radioButton.getText().toString();
+
+                        setRecorrencia(freq);
+
+                        interval = "1";
+
+                        byday.add("MO");
+                        byday.add("TU");
+                        byday.add("WE");
+                        byday.add("TH");
+                        byday.add("FR");
+                        byday.add("SA");
+                        byday.add("SU");
+                    }
+
                     String origin = BaseActivity.localInicial;
+
                     String destiny = BaseActivity.enderecoDestino.get(0);
-                    recorrencia = radioButton.getText().toString();
+
                     motorista = dropdownMotoristas.getSelectedItem().toString();
 
                     DirectionsResult results = getDirectionsDetails(origin,destiny, TravelMode.DRIVING);
 
-                    //getEndLocationTitle(results);
+                    Log.i("TRAJ.PARSE_INTERVAL", interval);
 
                     if (results != null){
 
-                        JSONObject mainJsonObject = new JSONObject();
-                        JSONObject partJsonObject = new JSONObject();
+                        ParseObject objetoGrupo = ParseObject.createWithoutData("GrupoCarona", BaseActivity.grupoSelecionadoId);
 
-                        for(int i = 0; i < BaseActivity.participantesAA.size(); i++){
+                        ParseObject recorrencia = new ParseObject("Recorrencia");
 
-                            try {
-                                partJsonObject.put("nome", BaseActivity.participantesAA.get(i));
-                                partJsonObject.put("recorrencia", recorrencia);
+                        recorrencia.put("frequencia", freq);
+                        recorrencia.put("pointerGrupoCarona", objetoGrupo);
+                        recorrencia.put("frequencia", freq);
+                        recorrencia.put("intervalo", interval);
+                        recorrencia.put("diasDaSemana", byday);
+                        recorrencia.put("dataInicial","2019-04-16");
+                        recorrencia.put("dataFinal", "false");
 
-                            } catch (JSONException e){
-
-                                e.printStackTrace();
+                        recorrencia.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if(e==null){
+                                    Log.i("TRAJ.PARSE.RECORR: ", "Trajeto Salvo OK");
+                                }else {
+                                    Log.i("TRAJ.PARSE.RECORR: ", e.getMessage());
+                                }
                             }
-                        }
+                        });
+
+                        recorrencia.fetchInBackground(new GetCallback<ParseObject>() {
+                            @Override
+                            public void done(ParseObject object, ParseException e) {
+                                if (e == null){
+                                    Log.i("TRAJETOS_RECORR.PARSE", "Obj. Recorrencia Encontrado!");
+
+                                    ParseObject trajeto = new ParseObject("Trajetos");
+
+                                    trajeto.put("motorista", motorista);
+                                    trajeto.put("origemEnd", origin);
+                                    trajeto.put("destinoEnd", destiny);
+                                    trajeto.put("participantes", BaseActivity.participantesAA.get(0));
+                                    trajeto.put("distancia", getEndLocationTitle(results));
+                                    trajeto.put("trajetoCorrente", 1);
+                                    trajeto.put("nomeTrajeto", "nome");
+                                    trajeto.put("pointerRecorrencia", object);
+
+                                    trajeto.saveInBackground(new SaveCallback() {
+                                        @Override
+                                        public void done(ParseException e) {
+                                            if (e == null){
+                                                Log.i("TRAJ.PARSE.ARR: ", "Trajeto Salvo OK");
+                                                Log.i("TRAJ.PARSE.ARR1: ", object.getObjectId());
+                                                Log.i("TRAJ.PARSE.ARR2: ", trajeto.getObjectId());
+                                                object.add("arrayTrajetos", trajeto);
+
+                                                object.saveInBackground();
+
+                                                arrayListTrajetos.add(trajeto);
+
+                                            } else {
+                                                Log.i("TRAJ.PARSE.ARR: ", e.getMessage());
+                                            }
+                                        }
+                                    });
+
+                                    if(BaseActivity.enderecoDestino.size() > 1) {
+
+                                                if (e == null){
+
+
+
+
+
+                                                        recorrencia.fetchIfNeededInBackground(new GetCallback<ParseObject>() {
+                                                            @Override
+                                                            public void done(ParseObject object, ParseException e) {
+
+                                                                for (int i = 0; i < (BaseActivity.enderecoDestino.size() - 1); i++) {
+                                                                String origem = BaseActivity.enderecoDestino.get(i);
+                                                                String destino = BaseActivity.enderecoDestino.get(i + 1);
+                                                                DirectionsResult results2 = getDirectionsDetails(origem, destino, TravelMode.DRIVING);
+
+                                                                ParseObject novosTrajetos = new ParseObject("Trajetos");
+
+                                                                novosTrajetos.put("motorista", motorista);
+                                                                novosTrajetos.put("origemEnd", origem);
+                                                                novosTrajetos.put("destinoEnd", destino);
+                                                                novosTrajetos.put("participantes", BaseActivity.participantesAA.get(i+1));
+                                                                novosTrajetos.put("distancia", getEndLocationTitle(results2));
+                                                                novosTrajetos.put("trajetoCorrente", 1);
+                                                                novosTrajetos.put("nomeTrajeto", "nome");
+                                                                novosTrajetos.put("pointerRecorrencia", object);
+
+                                                                novosTrajetos.saveInBackground(new SaveCallback() {
+                                                                    @Override
+                                                                    public void done(ParseException e) {
+                                                                        if (e == null) {
+                                                                            Log.i("TRAJ.PARSE.NV.TRAJ: ", "Novos trajetos Salvos OK");
+                                                                            Log.i("TRAJ.PARSE.NV.TRAJ1: ", object.getObjectId());
+                                                                            Log.i("TRAJ.PARSE.NV.TRAJ2: ", novosTrajetos.getObjectId());
+                                                                            object.add("arrayTrajetos", novosTrajetos);
+                                                                            object.saveInBackground();
+                                                                            arrayListTrajetos.add(novosTrajetos);
+
+                                                                        } else {
+                                                                            Log.i("TRAJ.PARSE.NV.TRAJ.: ", e.getMessage());
+                                                                        }
+
+                                                                    }
+                                                                });
+
+                                                            }
+
+                                                            }
+                                                        });
+
+
+                                                }
+                                    }
+                                } else {
+
+                                    Log.i("TRAJETOS_RECORR.PARSE", e.getMessage());
+                                }
+                            }
+                        });
+
+                        //recorrencia.addAll("arrayTrajetos", arrayListTrajetos);
+                        //recorrencia.saveInBackground();
+
+
+//CÓDIGO PARA UTILIZAR JSON PARA SALVAR TRAJETOS E RECORRÊNCIAS.
+/*
+                        JSONObject mainJsonObject = new JSONObject();
 
                         try {
-                            mainJsonObject.put("ID", 1);
-                            mainJsonObject.put("motorista", motorista);
+                            mainJsonObject.put("ID", 0);
+                            //mainJsonObject.put("motorista", motorista);
                             mainJsonObject.put("origem", origin);
                             mainJsonObject.put("destino", destiny);
                             mainJsonObject.put("km", getEndLocationTitle(results));
-                            mainJsonObject.put("participantes", partJsonObject);
-                            jsonArray.put(mainJsonObject);
+                            mainJsonObject.put("participantes", new JSONArray(BaseActivity.participantesAA.get(0)));
+                            //mainJsonObject.put("freq", freq);
+                            //mainJsonObject.put("intervalo", interval);
+                            //mainJsonObject.put("dias", byday);
+                            jsonMainArray.put(mainJsonObject);
 
                         } catch (JSONException e){
 
                             e.printStackTrace();
                         }
-                        //Log.i("Trajeto_SAVE3.2", mainJsonObject.toString());
-
-                        Log.i("Trajeto_SAVE3.1", jsonArray.toString());
-
-                        Log.i("Trajeto_SAVE_R", getEndLocationTitle(results));
 
                         if(BaseActivity.enderecoDestino.size() > 1){
 
                             for(int i = 0; i < (BaseActivity.enderecoDestino.size()-1); i++){
 
-                                String origem = BaseActivity.enderecoDestino.get(i);
-                                String destino = BaseActivity.enderecoDestino.get(i+1);
-                                DirectionsResult results2 = getDirectionsDetails(origem,destino, TravelMode.DRIVING);
+                                String origem2 = BaseActivity.enderecoDestino.get(i);
+                                String destino2 = BaseActivity.enderecoDestino.get(i+1);
+                                DirectionsResult results2 = getDirectionsDetails(origem2,destino2, TravelMode.DRIVING);
+
                                 JSONObject mainJsonObject2 = new JSONObject();
-                                JSONObject partJsonObject2 = new JSONObject();
-
-                                for(int y = 0; y < BaseActivity.participantesAA.size(); y++){
-
-                                    try {
-                                        partJsonObject2.put("nome", BaseActivity.participantesAA.get(i));
-                                        partJsonObject2.put("recorrencia", recorrencia);
-
-
-                                    } catch (JSONException e){
-
-                                        e.printStackTrace();
-                                    }
-                                }
 
                                 try {
-                                    mainJsonObject2.put("ID", i+2);
-                                    mainJsonObject2.put("motorista", motorista);
-                                    mainJsonObject2.put("origem", origem);
-                                    mainJsonObject2.put("destino", destino);
-                                    mainJsonObject2.put("km", getEndLocationTitle(results));
-                                    mainJsonObject2.put("participantes", partJsonObject2);
+                                    mainJsonObject2.put("ID", i+1);
+                                    //mainJsonObject2.put("motorista", motorista);
+                                    mainJsonObject2.put("origem", origem2);
+                                    mainJsonObject2.put("destino", destino2);
+                                    mainJsonObject2.put("km", getEndLocationTitle(results2));
+                                    mainJsonObject2.put("participantes", new JSONArray(BaseActivity.participantesAA.get(i+1)));
+                                    //mainJsonObject2.put("freq", freq);
+                                    //mainJsonObject2.put("intervalo", interval);
+                                    //mainJsonObject2.put("dias", byday);
                                 } catch (JSONException e){
 
                                     e.printStackTrace();
                                 }
 
-                                jsonArray.put(mainJsonObject2);
+                                jsonMainArray.put(mainJsonObject2);
 
-                                //getEndLocationTitle(results2);
-
-                                Log.i("Trajeto_SAVE2", getEndLocationTitle(results2));
+                                Log.i("Trajeto_SAVE2", getEndLocationTitle(results2).toString());
                             }
                         }
 
-                        Log.i("Trajeto_ArrArr", BaseActivity.participantesAA.toString());
+                        Log.i("Trajeto_SAVE3", jsonMainArray.toString());
 
-                        Log.i("Trajeto_SAVE3", jsonArray.toString());
+                        ParseObject objetoGrupo = ParseObject.createWithoutData("GrupoCarona", BaseActivity.grupoSelecionadoId);
 
-                        setRecorrencia(recorrencia);
+                        ParseObject novosTrajetos = new ParseObject("Trajetos");
+
+                        novosTrajetos.put("motorista", motorista);
+                        novosTrajetos.put("trajetosJSON", jsonMainArray);
+                        novosTrajetos.put("pointerGrupoCarona", objetoGrupo);
+                        novosTrajetos.put("frequencia", freq);
+                        novosTrajetos.put("intervalo", interval);
+                        novosTrajetos.put("diasDaSemana", byday);
+                        novosTrajetos.put("trajetoCorrente", 1);
+                        novosTrajetos.saveInBackground();
+
+                        novosTrajetos.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+
+                                if(e == null){
+                                    Log.i("TRAJ.PARSE: ", "SALVO OK");
+                                } else {
+                                    Log.i("TRAJ.PARSE: ", e.getMessage());
+                                }
+
+                            }
+                        });
+*/
 
                         Intent intent = new Intent(Trajetos.this, DiasSemana.class);
 
                         startActivity(intent);
 
-                        //Log.i("Trajetos-LocIni", BaseActivity.localInicial);
-                        //Log.i("Trajetos-Particip", BaseActivity.participantes.toString());
-                        //Log.i("Trajetos-Destinos", BaseActivity.enderecoDestino.toString());
-                        //Log.i("Trajetos-RadioBtn", setRecorrencia(recorrencia));
                     } else {
 
                         Toast.makeText(Trajetos.this, "Ocorreu um erro, verifique os endereços inseridos e tente novamente.", Toast.LENGTH_SHORT).show();
@@ -445,6 +611,7 @@ CAIXA DE DIALOGO -> FIM */
                 startActivity(intent);
 
                 BaseActivity.participantesTemp.clear();
+
                 BaseActivity.localInicial = "";
             }
         });
@@ -478,26 +645,24 @@ CAIXA DE DIALOGO -> FIM */
 
     public String setRecorrencia (String opcaoSelecionada){
 
-        String s = "";
-
         switch (opcaoSelecionada){
             case "Todo dia":
-                s = "FREQ=DAILY";
+                freq = "DAILY";
                 break;
             case "Toda semana":
-                s = "FREQ=WEEKLY";
+                freq = "WEEKLY";
                 break;
             case "Todo mês":
-                s = "FREQ=MONTHLY";
+                freq = "MONTHLY";
                 break;
             case "Todo ano":
-                s = "FREQ=YEARLY";
+                freq = "YEARLY";
                 break;
             default:
-                s = "";
+                freq = "";
         }
 
-        return s;
+        return opcaoSelecionada;
     }
 
 
@@ -607,8 +772,8 @@ CAIXA DE DIALOGO -> FIM */
         }
     }
 
-    private String getEndLocationTitle(DirectionsResult results){
-        return  /*"Time :"+ results.routes[overview].legs[overview].duration.humanReadable + " Distance :" +*/ results.routes[overview].legs[overview].distance.humanReadable;
+    private Long getEndLocationTitle(DirectionsResult results){
+        return  /*"Time :"+ results.routes[overview].legs[overview].duration.humanReadable + " Distance :" +*/ results.routes[overview].legs[overview].distance.inMeters;
     }
 
     private GeoApiContext getGeoContext() {

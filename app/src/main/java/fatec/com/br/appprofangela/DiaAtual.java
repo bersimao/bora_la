@@ -254,6 +254,7 @@ public class DiaAtual extends AppCompatActivity
 
                 Log.i("DiaAtual_D.Semana", Integer.toString(dayOfWeek));
 
+                BaseActivity.dataSelecionadaCalendario = ano+"-"+mes+"-"+dia;
 
                 final Intent intentCaronaDoDia = new Intent().setClass(DiaAtual.this, CaronaDoDia.class);
 

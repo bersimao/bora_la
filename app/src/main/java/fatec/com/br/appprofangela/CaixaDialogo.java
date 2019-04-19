@@ -23,13 +23,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import scala.util.regexp.Base;
+//import scala.util.regexp.Base;
 
 public class CaixaDialogo extends AppCompatActivity {
 
     ArrayList<String> participantesArray = new ArrayList<>();
     ArrayAdapter arrayAdapter;
-    StringBuilder sb = new StringBuilder();
+    //StringBuilder sb = new StringBuilder(); //String Builder para a forma de armazenamento em uma única String. Não está sendo utilizado pois os participantes são inseridos num Array.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,6 @@ public class CaixaDialogo extends AppCompatActivity {
         ImageButton buttonEndereco = findViewById(R.id.dialog_button_pesquisa_dest11);
         Button buttonCancelar = findViewById(R.id.dialog_btnLeft);
         Button buttonSalvar = findViewById(R.id.dialog_btmRight);
-
 
         if (BaseActivity.opcaoShowDialog == 1){
 
@@ -128,7 +127,7 @@ public class CaixaDialogo extends AppCompatActivity {
 
                     Log.i("CXDIALOGO 2", BaseActivity.participantesTemp.toString());
 
-                    sb.setLength(0);
+                    //sb.setLength(0); //String Builder para a forma de armazenamento em uma única String. Não está sendo utilizado pois os participantes são inseridos num Array.
 
                     ArrayList<String> list = new ArrayList<>();
 
@@ -141,8 +140,11 @@ public class CaixaDialogo extends AppCompatActivity {
                     }
 
                     BaseActivity.enderecoDestino.add(BaseActivity.enderecoDestinoTemp);
+
                     Log.i("CXDIALOGO_endDest", BaseActivity.enderecoDestino.toString());
+
                     Log.i("CXDIALOGO_ArrArr", BaseActivity.participantesAA.toString());
+
                     Intent intent = new Intent(CaixaDialogo.this, Trajetos.class);
 
                     startActivity(intent);

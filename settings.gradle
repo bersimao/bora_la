@@ -1,1 +1,1 @@
-include ':app'
+include ':app', ':rfc5545-datetime-0.2.4'

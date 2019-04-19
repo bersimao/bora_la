@@ -229,6 +229,8 @@ public class GrupoCarona extends AppCompatActivity
 
                             BaseActivity.caroneirosDoGrupo = Caroneiros;
 
+                            BaseActivity.grupoSelecionadoId = grupoId;
+
                             startActivity(intentDiaAtual);
 
                         } else {

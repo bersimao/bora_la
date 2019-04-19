@@ -20,6 +20,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -28,6 +30,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.model.RectangularBounds;
@@ -96,7 +100,7 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback {
 
     public void updateMap(Location location) {
 
-        LatLng localPesquisado = new LatLng(location.getLatitude(), location.getLongitude());
+        LatLng localPesquisado = new LatLng(location.getLatitude(), location.getLongitude()); //-23.236137, -45.917513  location.getLatitude(), location.getLongitude(
 
         mMap.clear();
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(localPesquisado, cameraZoom));
@@ -233,20 +237,46 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback {
 
             //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
-            Location lastKnowLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            //Location lastKnowLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER); Código que parou de funcionar em 17/04/2019, retornava null para lat e lng.
 
-            updateMap(lastKnowLocation);
+            //updateMap(lastKnowLocation); Código que parou de funcionar em 17/04/2019, retornava null para lat e lng.
 
-            /*
+            getLastLocationNewMethod();
+
+/* // CÓDIGO PARA ATUALIZAR CONSTANTEMENTE A POSIÇÃO DO USUÁRIO
             if (lastKnowLocation != null) {
 
                 updateMap(lastKnowLocation);
             }
-            */
+*/
 
         }
     }
 
+    private void getLastLocationNewMethod(){
+        FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        mFusedLocationClient.getLastLocation()
+                .addOnSuccessListener(new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // GPS location can be null if GPS is switched off
+                        if (location != null) {
+
+                            Location location1 = location;
+
+                            updateMap(location);
+
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("MapDemoActivity", "Error trying to get last GPS location");
+                        e.printStackTrace();
+                    }
+                });
+    }
 
     //DIRECTIONS METHODS
     /*
@@ -290,7 +320,6 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback {
         return  "Time :"+ results.routes[overview].legs[overview].duration.humanReadable + " Distance :" + results.routes[overview].legs[overview].distance.humanReadable;
     }
 
-
     private GeoApiContext getGeoContext() {
         GeoApiContext geoApiContext = new GeoApiContext.Builder()
                 .queryRateLimit(3)
@@ -302,7 +331,6 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback {
         return geoApiContext;
     }
     */
-
 }
 
 /**
@@ -314,4 +342,3 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback {
  * it inside the SupportMapFragment. This method will only be triggered once the user has
  * installed Google Play services and returned to the app.
  */
-

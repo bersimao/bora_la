@@ -44,10 +44,10 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="Trajetos"
                     android:textColor="@color/colorLetraTitulo"
                     android:textSize="20dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:text="Trajetos"/>
             </LinearLayout>
 
             <EditText
@@ -93,8 +93,11 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="52dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:layout_margin="@dimen/fab_margin"
+                style="?android:attr/buttonBarStyle">
 
                 <EditText
                     android:id="@+id/edit_text_endereco_local_inicial"
@@ -107,9 +110,10 @@
                 <ImageButton
                     android:id="@+id/imageButton_pesq_local_inicial"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:clickable="true"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorButton"
+                    android:fontFamily="@font/nunito_regular"
+                    android:textColor="@color/colorLetraBt"
                     app:srcCompat="@drawable/ic_menu_search" />
             </LinearLayout>
 
@@ -131,9 +135,12 @@
             <Button
                 android:id="@+id/button_adicionar_destinos_participantes"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/colorButton"
+                android:fontFamily="@font/nunito_regular"
+                android:textColor="@color/colorLetraBt"
                 android:text="Adicionar Destinos" />
-
 
             <TextView
                 android:id="@+id/textview_recorrencia"
@@ -179,30 +186,60 @@
             <Button
                 android:id="@+id/button_outra_recorrencia"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginStart="20dp"
                 android:layout_weight="1"
-                android:text="Outro" />
+                android:background="@color/colorButton"
+                android:fontFamily="@font/nunito_regular"
+                android:textColor="@color/colorLetraBt"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_margin="@dimen/fab_margin"
+                android:text="Personalizar" />
+
+            <TextView
+                android:id="@+id/textView_resumo_recorrencia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/nunito_regular"
+                android:textColor="@color/colorLetraTitulo"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal">
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:layout_margin="@dimen/fab_margin"
+                style="?android:attr/buttonBarStyle">
 
                 <Button
                     android:id="@+id/button_cancelar_trajetos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center|center_horizontal"
+                    android:layout_margin="15dp"
                     android:layout_weight="1"
-                    android:text="Cancelar" />
+                    android:background="@color/colorButton"
+                    android:fontFamily="@font/nunito_regular"
+                    android:textColor="@color/colorLetraBt"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:text="Cancelar"/> />
 
                 <Button
                     android:id="@+id/button_salvar_trajetos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center|center_horizontal"
+                    android:layout_margin="15dp"
                     android:layout_weight="1"
-                    android:text="Salvar" />
+                    android:background="@color/colorButton"
+                    android:fontFamily="@font/nunito_regular"
+                    android:foregroundGravity="center"
+                    android:text="Salvar"
+                    android:textColor="@color/colorLetraBt"
+                    style="?android:attr/buttonBarButtonStyle" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

@@ -49,6 +49,8 @@ public class CaronaDoDia extends AppCompatActivity
 
     String calendarioDia, dia, mes, ano, DataId, grupoAtivo;
 
+    Button buttonTrajetos;
+
     //============== MÉTODOS DA GAVETA LATERAL ============= INÍCIO
     @Override
     public void onBackPressed() {
@@ -156,6 +158,8 @@ public class CaronaDoDia extends AppCompatActivity
 
         calendarioDia = ano + mes + dia;
 
+        buttonTrajetos = findViewById(R.id.buttonTrajetosDoDia);
+
 /*
         try {
             RecurringDates.rrule(ano+"-"+mes+"-"+dia);
@@ -258,5 +262,16 @@ public class CaronaDoDia extends AppCompatActivity
                 });
             }
         });
+
+        buttonTrajetos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentTrajetoDoDia = new Intent(CaronaDoDia.this, TrajetosDoDia.class);
+
+                startActivity(intentTrajetoDoDia);
+            }
+        });
+
+
     }
 }
