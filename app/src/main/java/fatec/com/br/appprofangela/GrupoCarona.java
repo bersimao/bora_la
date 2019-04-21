@@ -227,6 +227,10 @@ public class GrupoCarona extends AppCompatActivity
                             intentDiaAtual.putExtra("caroneirosId", CaroneirosId);
                             intentDiaAtual.putExtra("IdGrupo", grupoId);
 
+                            BaseActivity.caroneirosDoGrupo = Caroneiros;
+
+                            BaseActivity.grupoSelecionadoId = grupoId;
+
                             startActivity(intentDiaAtual);
 
                         } else {
@@ -250,9 +254,9 @@ public class GrupoCarona extends AppCompatActivity
                         if (e == null) {
                             // "user" is now a list of the user who at the grupoAtivo
 
-                            //TESTE CLASSE Buscas
+                            //TESTE CLASSE BaseActivity
 
-                            //Buscas.buscaCaroneirosGrupo(grupoId);
+                            //BaseActivity.buscaCaroneirosGrupo(grupoId);
                             //FIM TESTE CLASSE BUSCA
 
                             //Intent intentDiaAtual = new Intent(GrupoCarona.this, DiaAtual.class);

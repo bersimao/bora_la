@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.scala-saddle:google-rfc-2445:20110304@jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.scala-saddle/google-rfc-2445/20110304/3f07b9c8c990f22b0040c6ad4987348c4f9f8136/google-rfc-2445-20110304.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.scala-saddle/google-rfc-2445/20110304/732d1fa4b92f019cec9a431d85c0ac179a3cdf34/google-rfc-2445-20110304-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
