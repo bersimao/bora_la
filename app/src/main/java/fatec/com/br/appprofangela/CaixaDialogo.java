@@ -125,8 +125,6 @@ public class CaixaDialogo extends AppCompatActivity {
 
                     BaseActivity.opcaoShowDialog = 0;
 
-                    Log.i("CXDIALOGO 2", BaseActivity.participantesTemp.toString());
-
                     //sb.setLength(0); //String Builder para a forma de armazenamento em uma única String. Não está sendo utilizado pois os participantes são inseridos num Array.
 
                     ArrayList<String> list = new ArrayList<>();
@@ -140,6 +138,8 @@ public class CaixaDialogo extends AppCompatActivity {
                     }
 
                     BaseActivity.enderecoDestino.add(BaseActivity.enderecoDestinoTemp);
+
+                    BaseActivity.nomeDestino.add(BaseActivity.enderecoDestinoTemp);
 
                     Log.i("CXDIALOGO_endDest", BaseActivity.enderecoDestino.toString());
 

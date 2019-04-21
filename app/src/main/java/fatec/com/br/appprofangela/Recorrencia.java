@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 public class Recorrencia extends AppCompatActivity {
 
-    String resumo = "", freq = "", interval = "0", byday = "";
+    String resumo = "", freq = "", interval = "1", byday = "";
     ArrayList byday2 = new ArrayList();
     EditText editTextIntervalo;
     Button buttonSalvarRecorrencia, buttonCancelarRecorrencia;

@@ -34,8 +34,10 @@ import com.parse.ParseUser;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 
 // TELA DO DIA SELECIONADO NO CALENDÁRIO DO GRUPO DE CARONA
 public class CaronaDoDia extends AppCompatActivity
@@ -44,6 +46,8 @@ public class CaronaDoDia extends AppCompatActivity
     ArrayList<String> caroneirosList = new ArrayList<>();
 
     ArrayAdapter arrayAdapter;
+
+    ListView listView;
 
     TextView diaCarona;
 
@@ -154,29 +158,22 @@ public class CaronaDoDia extends AppCompatActivity
 
         grupoAtivo = intent.getStringExtra("grupoAtivo");
 
-        caroneirosList = intent.getStringArrayListExtra("caroneirosList");
+        listView = findViewById(R.id.list_view_with_checkbox);
+
+        listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+
+        queryRecorrencias();
+
+        //FORMA DE POPULAR OS CARONEIROS DO DIA SELECIONADO, COM TODOS OS CARONEIROS DO GRUPO DE CARONA.
+        //caroneirosList = intent.getStringArrayListExtra("caroneirosList");
+        //arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_multiple_choice, caroneirosList);
+        //listView.setAdapter(arrayAdapter);
 
         calendarioDia = ano + mes + dia;
 
         buttonTrajetos = findViewById(R.id.buttonTrajetosDoDia);
 
-/*
-        try {
-            RecurringDates.rrule(ano+"-"+mes+"-"+dia);
-        } catch (java.text.ParseException e) {
-            e.printStackTrace();
-        }
-*/
-
         diaCarona.setText(dia + "/ " + mes + "/ " + ano);
-
-        final ListView listView = findViewById(R.id.list_view_with_checkbox);
-
-        listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
-
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_multiple_choice, caroneirosList);
-
-        listView.setAdapter(arrayAdapter);
 
         ParseObject dataId = ParseObject.createWithoutData("Calendario", DataId);
 
@@ -271,7 +268,115 @@ public class CaronaDoDia extends AppCompatActivity
                 startActivity(intentTrajetoDoDia);
             }
         });
+    }
 
+    public void queryRecorrencias() {
+
+        ParseObject objetoGrupo2 = ParseObject.createWithoutData("GrupoCarona", BaseActivity.grupoSelecionadoId);
+
+        ParseQuery<ParseObject> query2 = ParseQuery.getQuery("Recorrencia");
+
+        query2.whereEqualTo("pointerGrupoCarona", objetoGrupo2);
+
+        query2.include("arrayTrajetos");
+
+        query2.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+
+                if (e == null) {
+
+                    if (objects.size() > 0) {
+
+                        for (ParseObject o : objects) {
+
+                            String frequenciaSemEspacos = o.getString("frequencia").replaceAll("\\s", "");
+
+                            String intervaloSemEspacos = o.getString("intervalo").replaceAll("\\s", "");
+
+                            List<String> listDiasDaSemana = o.getList("diasDaSemana");
+
+                            String diasDaSemanaSemEspacos = listDiasDaSemana.toString().substring(1, listDiasDaSemana.toString().length() - 1);
+
+                            diasDaSemanaSemEspacos = diasDaSemanaSemEspacos.replaceAll("\\s", "");
+
+                            Log.i("TRAJ.DO.DIA.ARR", "ObjetoId: " + o.getObjectId());
+
+                            Log.i("TRAJ.DO.DIA.ARR", "Frequencia: " + frequenciaSemEspacos);
+                            Log.i("TRAJ.DO.DIA.ARR", "Intervalo: " + intervaloSemEspacos);
+                            Log.i("TRAJ.DO.DIA.ARR", "Dias da Semana: " + diasDaSemanaSemEspacos);
+                            Log.i("TRAJ.DO.DIA.ARR", "DiaSelecionado: " + BaseActivity.dataSelecionadaCalendario);
+
+                            try {
+
+                                boolean check = RecurringDates.rrule(o.getString("frequencia"),
+                                        o.getString("intervalo"),
+                                        listDiasDaSemana, o.getString("dataInicial"),
+                                        BaseActivity.dataSelecionadaCalendario);
+
+                                if (check) {
+
+                                    Toast.makeText(CaronaDoDia.this, "Objeto " + o.getObjectId() + " pertence a Recorrência! ", Toast.LENGTH_SHORT).show();
+
+                                    List<ParseObject> trajetos = o.getList("arrayTrajetos");
+
+                                    if (trajetos != null) {
+
+                                        if (trajetos.size() > 0) {
+
+                                            Log.i("TRAJ.DO.DIA.ARR", "trajetos.size(): " + trajetos.size());
+
+                                            ArrayList<String> participantesTrajetos = new ArrayList<>();
+
+                                            for (int i = 0; i < trajetos.size(); i++) {
+
+                                                List<String> participantesArray = trajetos.get(i).getList("participantes");
+
+                                                Log.i("TRAJ.DO.DIA.ARR", "participantesArray: " + participantesArray.toString());
+
+                                                for (int n = 0; n < participantesArray.size(); n++) {
+                                                    participantesTrajetos.add(participantesArray.get(n));
+                                                }
+                                            }
+
+                                            Set<String> participantesUnicosTrajetos = new HashSet<>(participantesTrajetos);
+
+                                            ArrayList<String> arrayListTemp = new ArrayList<>(participantesUnicosTrajetos);
+
+                                            setArrayListTrajetosDoDia(arrayListTemp);
+
+                                            Log.i("TRAJ.DO.DIA.ARR", "arrayListTemp: " + arrayListTemp.toString());
+
+                                        }
+
+                                    }
+
+                                } else {
+
+                                    Toast.makeText(CaronaDoDia.this, "Objeto " + o.getObjectId() + " não pertence a Recorrência! ", Toast.LENGTH_SHORT).show();
+                                }
+
+                            } catch (java.text.ParseException e1) {
+
+                                e1.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    public void setArrayListTrajetosDoDia(ArrayList<String> participantes) {
+
+        for (int i = 0; i < participantes.size(); i++) {
+
+            caroneirosList.add(participantes.get(i));
+        }
+
+        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_multiple_choice, caroneirosList);
+
+        listView.setAdapter(arrayAdapter);
 
     }
 }

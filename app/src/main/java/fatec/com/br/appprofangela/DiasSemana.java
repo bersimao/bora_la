@@ -89,8 +89,6 @@ public class DiasSemana extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                BaseActivity.nomeTrajeto = "";
-
                 BaseActivity.participantesAA.clear();
 
                 BaseActivity.participantesTemp.clear();
@@ -99,7 +97,13 @@ public class DiasSemana extends AppCompatActivity {
 
                 BaseActivity.enderecoDestinoTemp = "";
 
+                BaseActivity.nomeDestino.clear();
+
+                BaseActivity.nomeDestinoTemp = "";
+
                 BaseActivity.localInicial = "";
+
+                BaseActivity.nomeLocalInicial = "";
 
                 BaseActivity.situacaoRadioGroupRecorrencia = 1;
 

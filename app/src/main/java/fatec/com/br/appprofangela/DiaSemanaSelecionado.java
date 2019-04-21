@@ -29,6 +29,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import scala.util.parsing.combinator.testing.Str;
+
 //import scala.util.parsing.combinator.testing.Str;
 
 public class DiaSemanaSelecionado extends AppCompatActivity {
@@ -95,7 +97,7 @@ public class DiaSemanaSelecionado extends AppCompatActivity {
 
                                         String destino = trajetos.get(i).getString("destinoEnd");
 
-                                        List<ParseObject> participantesArray = trajetos.get(i).getList("participantes");
+                                        List<String> participantesArray = trajetos.get(i).getList("participantes");
 
                                         String motorista = trajetos.get(i).getString("motorista");
 

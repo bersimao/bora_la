@@ -50,12 +50,6 @@
                     android:text="Trajetos"/>
             </LinearLayout>
 
-            <EditText
-                android:id="@+id/edit_text_nome_trajeto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Dê um bom nome para o seu Trajeto." />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -152,6 +146,36 @@
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:orientation="horizontal"
+                style="?android:attr/buttonBarStyle">
+
+                <TextView
+                    android:id="@+id/textViewDataInicial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:text="A partir do dia: "
+                    android:textColor="@color/colorLetraTitulo"
+                    android:textSize="20dp"
+                    android:textStyle="normal" />
+
+                <EditText
+                    android:id="@+id/editTextCalendario"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:inputType="textPersonName"
+                    android:hint="data inicial"
+                    android:clickable="true"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:longClickable="false"/>
+            </LinearLayout>
+
             <RadioGroup
                 android:id="@+id/radio_group_recorrencia"
                 android:layout_width="match_parent"
@@ -185,16 +209,14 @@
 
             <Button
                 android:id="@+id/button_outra_recorrencia"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginStart="20dp"
+                android:layout_height="10dp"
                 android:layout_weight="1"
                 android:background="@color/colorButton"
                 android:fontFamily="@font/nunito_regular"
-                android:textColor="@color/colorLetraBt"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_margin="@dimen/fab_margin"
-                android:text="Personalizar" />
+                android:text="Personalizar"
+                android:textColor="@color/colorLetraBt" />
 
             <TextView
                 android:id="@+id/textView_resumo_recorrencia"

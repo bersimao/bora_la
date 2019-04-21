@@ -172,10 +172,12 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback {
 
                             case 1:
                                 BaseActivity.localInicial = place.getAddress();
+                                BaseActivity.nomeLocalInicial = nome;
                                 BaseActivity.opcaoShowDialog = 0;
                                 break;
                             case 2:
                                 BaseActivity.enderecoDestinoTemp = place.getAddress();
+                                BaseActivity.nomeDestinoTemp = nome;
                                 BaseActivity.opcaoShowDialog = 1;
                                 break;
                             default:
