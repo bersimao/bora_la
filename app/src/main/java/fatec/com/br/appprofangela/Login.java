@@ -1,13 +1,15 @@
 package fatec.com.br.appprofangela;
 
 import android.content.Intent;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseAnalytics;
@@ -15,28 +17,112 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
-//import android.widget.EditText;
 
-//import com.github.rtoshiro.util.format.SimpleMaskFormatter;
-//import com.github.rtoshiro.util.format.text.MaskTextWatcher;
+import java.util.regex.Pattern;
+
+/*Codificacao respeitando os requisitos do controle TRELLO RF002B*/
 
 public class Login extends AppCompatActivity {
 
-   /* private EditText cpfFunc;{
+    private static final Pattern PASSWORD_PATTERN =
+            Pattern.compile("^" +
+                    "(?=.*[0-9])" +   //Pelo menos um ditito
+                    "(?=.*[a-z])" +   //Pelo menos uma letra minuscula
+                    "(?=.*[A-Z])" +   //Pelo menos uma letra Maiuscula
+                    "(?=\\S+$)" +     //Sem espaço em branco
+                    ".{6,}" +         //no minimo 6 caracteres
+                    "$");
 
-        //Mascara para CPF
-        SimpleMaskFormatter simpleMaskFormatter = new SimpleMaskFormatter("NNN.NNN.NNN-NN");
-        MaskTextWatcher masCPF = new MaskTextWatcher(cpfFunc, simpleMaskFormatter);
-        cpfFunc.addTextChangedListener(masCPF);
+    private TextInputLayout textInputEmail;
+    private TextInputLayout textInputPassword;
+    private Button btnentrar;
+    private Button btncadastre;
 
-    }*/
+    private boolean validateEmail(){
+        String emailInput = textInputEmail.getEditText().getText().toString().trim();
 
-   public void mostrarSistema(){
+        btnentrar.setEnabled (true);
 
-       Intent intent = new Intent(this, GrupoCarona.class);
+        if (emailInput.isEmpty()){
+            textInputEmail.setError("É necessário informar um email.");
+            return false;
 
-       startActivity(intent);
-   }
+        }else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()){
+            textInputEmail.setError("Formato do Email inválido!");
+            return false;
+
+        }else {
+            textInputEmail.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validatePassword(){
+        String passwordInput = textInputPassword.getEditText().getText().toString().trim();
+
+        if (passwordInput.isEmpty()){
+            textInputPassword.setError("É necessário informar uma senha.");
+            return false;
+
+        } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()){
+            textInputPassword.setError("A senha deve contar ao menos 6 caracteres, sendo ao menos uma letra maiúscula e um número.");
+            return false;
+
+        }else {
+            textInputPassword.setError(null);
+            return true;
+        }
+    }
+
+    public void entrarSistema(View v){
+
+        textInputEmail = findViewById(R.id.text_input_email);
+        textInputPassword = findViewById(R.id.text_input_password);
+        btnentrar = findViewById(R.id.entrar);
+        btncadastre = findViewById(R.id.button2);
+
+
+        if (!validateEmail() || !validatePassword()){
+
+            btnentrar.setEnabled (true);
+            btncadastre.setEnabled(true);
+
+            return;
+        } else{
+
+            btnentrar.setEnabled (false);
+
+            Log.i("teste_conexao", textInputEmail.getEditText().getText().toString() + textInputPassword.getEditText().getText().toString());
+
+            ParseUser.logInInBackground(textInputEmail.getEditText().getText().toString(), textInputPassword.getEditText().getText().toString(), new LogInCallback() {
+                @Override
+                public void done(ParseUser user, ParseException e) {
+
+                    if (user != null ){
+
+                        Log.i("Login", "Login Sucessful");
+                        Toast.makeText(Login.this, "Seja bem vindo ao Bóra Lá  ;)", Toast.LENGTH_SHORT).show();
+                        mostrarSistema();
+
+                    } else {
+
+                        btnentrar.setEnabled (true);
+
+                        Toast.makeText(Login.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+
+    }
+
+    public void mostrarSistema(){
+
+        Intent intent = new Intent(this, GrupoCarona.class);
+
+        startActivity(intent);
+
+    }
 
     public void AbrirEsqSenha (View v) {
 
@@ -47,45 +133,17 @@ public class Login extends AppCompatActivity {
 
     public void AbrirCadastro (View view) {
 
+        btncadastre = findViewById(R.id.button2);
+        btnentrar = findViewById(R.id.entrar);
+
         Intent intent = new Intent (this, Cadastro.class);
 
+        btncadastre.setEnabled (false);
+        btnentrar.setEnabled(true);
+
         startActivity(intent);
-    }
-
-    public void entrarSistema(View view) {
-
-        EditText login = findViewById(R.id.login);
-        EditText senha = findViewById(R.id.senha);
-
-        if(login.getText().toString().matches("") || senha.getText().toString().matches("")){
-
-            Toast.makeText(this, "Inserir Nome de Usuário e Senha", Toast.LENGTH_SHORT).show();
-
-        } else{
-
-            ParseUser.logInInBackground(login.getText().toString(), senha.getText().toString(), new LogInCallback() {
-                @Override
-                public void done(ParseUser user, ParseException e) {
-
-                    if (user != null){
-
-                        Log.i("Login", "Login Sucessful");
-                        Toast.makeText(Login.this, "Login Efetuado!", Toast.LENGTH_SHORT).show();
-                        mostrarSistema();
-
-                    } else {
-
-                        Toast.makeText(Login.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-
-                }
-            });
-
-        }
 
     }
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,43 +152,6 @@ public class Login extends AppCompatActivity {
 
         setTitle("");
 
-        //cpfFunc = findViewById(R.id.id_login);
-
-/*
-        ParseUser user = new ParseUser();
-
-        user.setUsername("bernardo.simao");
-        user.setPassword("1234");
-
-        user.signUpInBackground(new SignUpCallback() {
-            @Override
-            public void done(ParseException e) {
-
-                if (e == null){
-
-                    Log.i("Sign Up", "Successful");
-
-                } else {
-
-                    Log.i("Sign Up", "Failed");
-
-                }
-
-            }
-        });
-
-*/
-
-        /*
-        if (ParseUser.getCurrentUser() != null){
-
-            mostrarSistema();
-        }
-
-        */
-
         ParseAnalytics.trackAppOpenedInBackground(getIntent());
-
-
     }
 }

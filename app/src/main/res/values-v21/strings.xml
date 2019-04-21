@@ -11,7 +11,7 @@
     <string name="log_tex_titulo_borala">BÓRA-LÁ</string>
 
     <string name="esq_bt_continuar">Continuar</string>
-    <string name="esq_text">Digite seu CPF para receber uma nova senha por SMS.</string>
+    <string name="esq_text">Digite seu Email para receber uma nova senha por SMS.</string>
     <string name="esq_text_cpf">CPF</string>
     <string name="esq_text_titulo">Esqueci minha Senha</string>
 
