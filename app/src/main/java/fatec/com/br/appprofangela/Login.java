@@ -17,6 +17,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
+<<<<<<< HEAD
 
 import java.util.regex.Pattern;
 
@@ -72,6 +73,83 @@ public class Login extends AppCompatActivity {
 
         }else {
             textInputPassword.setError(null);
+=======
+
+import java.util.regex.Pattern;
+
+/*Codificacao respeitando os requisitos do controle TRELLO RF002B*/
+
+public class Login extends AppCompatActivity {
+
+    private static final Pattern PASSWORD_PATTERN =
+            Pattern.compile("^" +
+                    "(?=.*[0-9])" +   //Pelo menos um ditito
+                    "(?=.*[a-z])" +   //Pelo menos uma letra minuscula
+                    "(?=.*[A-Z])" +   //Pelo menos uma letra Maiuscula
+                    "(?=\\S+$)" +     //Sem espaço em branco
+                    ".{6,}" +         //no minimo 6 caracteres
+                    "$");
+
+    private TextInputLayout textInputEmail;
+    private TextInputLayout textInputPassword;
+    private Button btnentrar;
+    private Button btncadastre;
+
+    private boolean validateEmail(){
+        String emailInput = textInputEmail.getEditText().getText().toString().trim();
+
+        btnentrar.setEnabled (true);
+
+        if (emailInput.isEmpty()){
+            textInputEmail.setError("É necessário informar um email.");
+            return false;
+
+        }else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()){
+            textInputEmail.setError("Formato do Email inválido!");
+            return false;
+
+        }else {
+            textInputEmail.setError(null);
+>>>>>>> producao
+            return true;
+        }
+    }
+
+<<<<<<< HEAD
+    public void entrarSistema(View v){
+
+        textInputEmail = findViewById(R.id.text_input_email);
+        textInputPassword = findViewById(R.id.text_input_password);
+        btnentrar = findViewById(R.id.entrar);
+        btncadastre = findViewById(R.id.button2);
+
+
+        if (!validateEmail() || !validatePassword()){
+
+            btnentrar.setEnabled (true);
+            btncadastre.setEnabled(true);
+
+            return;
+        } else{
+
+            btnentrar.setEnabled (false);
+
+            Log.i("teste_conexao", textInputEmail.getEditText().getText().toString() + textInputPassword.getEditText().getText().toString());
+
+=======
+    private boolean validatePassword(){
+        String passwordInput = textInputPassword.getEditText().getText().toString().trim();
+
+        if (passwordInput.isEmpty()){
+            textInputPassword.setError("É necessário informar uma senha.");
+            return false;
+
+        } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()){
+            textInputPassword.setError("A senha deve contar ao menos 6 caracteres, sendo ao menos uma letra maiúscula e um número.");
+            return false;
+
+        }else {
+            textInputPassword.setError(null);
             return true;
         }
     }
@@ -96,6 +174,7 @@ public class Login extends AppCompatActivity {
 
             Log.i("teste_conexao", textInputEmail.getEditText().getText().toString() + textInputPassword.getEditText().getText().toString());
 
+>>>>>>> producao
             ParseUser.logInInBackground(textInputEmail.getEditText().getText().toString(), textInputPassword.getEditText().getText().toString(), new LogInCallback() {
                 @Override
                 public void done(ParseUser user, ParseException e) {
@@ -123,6 +202,7 @@ public class Login extends AppCompatActivity {
         Intent intent = new Intent(this, GrupoCarona.class);
 
         startActivity(intent);
+<<<<<<< HEAD
 
     }
 
@@ -144,6 +224,29 @@ public class Login extends AppCompatActivity {
         btnentrar.setEnabled(true);
 
        startActivity(intent);
+=======
+
+    }
+
+    public void AbrirEsqSenha (View v) {
+
+        Intent intent = new Intent (this, EsqueciSenha.class);
+
+        startActivity(intent);
+    }
+
+    public void AbrirCadastro (View view) {
+
+        btncadastre = findViewById(R.id.button2);
+        btnentrar = findViewById(R.id.entrar);
+
+        Intent intent = new Intent (this, Cadastro.class);
+
+        btncadastre.setEnabled (false);
+        btnentrar.setEnabled(true);
+
+        startActivity(intent);
+>>>>>>> producao
 
     }
 

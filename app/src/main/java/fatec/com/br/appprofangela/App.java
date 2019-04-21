@@ -19,6 +19,8 @@ public class App extends Application {
         String clientKey = getString(R.string.parse_client_key);
         String serverParse = getString(R.string.parse_application_server);
 
+        Parse.enableLocalDatastore(this);
+
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId(applicationId)
                 // if defined

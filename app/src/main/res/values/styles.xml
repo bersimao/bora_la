@@ -18,6 +18,7 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+<<<<<<< HEAD
     <style name="StyledTilEditTextTheme">
         <item name="colorControlNormal">#e6ffffff</item> // Cor padrão da linha
         <item name="colorControlActivated">#F1CB89</item> // Cor linha e texto quando recebe foco
@@ -30,3 +31,23 @@
     </style>
 
  </resources>
+=======
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.CaixaDialogo" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/nunito_regular</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowMinWidthMinor">@dimen/min_width_minor</item>
+        <item name="android:windowMinWidthMajor">@dimen/min_width_major</item>
+
+    </style>
+
+</resources>
+>>>>>>> producao

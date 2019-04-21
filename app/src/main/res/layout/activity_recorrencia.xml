@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    android:fadingEdge="horizontal|vertical"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/fab_margin">
+
+        <TextView
+            android:id="@+id/dialog_txtTitle"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="Personalizar Recorrência"
+            android:textColor="@color/colorLetraTitulo"
+            android:textSize="20dp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/dialog_txtRepete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Repete a cada"
+            android:textColor="@color/colorLetraTitulo"
+            android:textSize="15dp"
+            android:textStyle="bold"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edit_text_quantidades_recorrencias"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="2"
+                android:text="1"
+                android:inputType="number"
+                android:gravity="center"/>
+            <Spinner
+                android:id="@+id/spinner_recorrencias_dias_semana"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textSize="20dp"
+                android:autofillHints="semana" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/dialog_textView12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ás/ aos"
+            android:textColor="@color/colorLetraTitulo"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/txt1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="S" />
+            <TextView
+                android:id="@+id/txt2"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="T" />
+            <TextView
+                android:id="@+id/txt3"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Q" />
+            <TextView
+                android:id="@+id/txt4"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Q" />
+            <TextView
+                android:id="@+id/txt5"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="S" />
+            <TextView
+                android:id="@+id/txt6"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="S" />
+            <TextView
+                android:id="@+id/txt7"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="D" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/radio_group_recorrencia_dias_semana"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+            <CheckBox
+                android:id="@+id/checkBox_segunda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="2" />
+            <CheckBox
+                android:id="@+id/checkBox_terca"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="2" />
+            <CheckBox
+                android:id="@+id/checkBox_quarta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="2" />
+            <CheckBox
+                android:id="@+id/checkBox_quinta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="2" />
+            <CheckBox
+                android:id="@+id/checkBox_sexta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="2" />
+            <CheckBox
+                android:id="@+id/checkBox_sabado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="2" />
+            <CheckBox
+                android:id="@+id/checkBox_domingo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/fab_margin"
+            style="?android:attr/buttonBarStyle">
+
+            <Button
+                android:id="@+id/dialog_btnCancelarRecorrencia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|center_horizontal"
+                android:layout_margin="15dp"
+                android:layout_weight="1"
+                android:background="@color/colorButton"
+                android:fontFamily="@font/nunito_regular"
+                android:textColor="@color/colorLetraBt"
+                style="?android:attr/buttonBarButtonStyle"
+                android:text="Cancelar"/>
+            <Button
+                android:id="@+id/dialog_btnSalvarRecorrencia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|center_horizontal"
+                android:layout_margin="15dp"
+                android:layout_weight="1"
+                android:background="@color/colorButton"
+                android:fontFamily="@font/nunito_regular"
+                android:foregroundGravity="center"
+                android:text="Salvar"
+                android:textColor="@color/colorLetraBt"
+                style="?android:attr/buttonBarButtonStyle"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
