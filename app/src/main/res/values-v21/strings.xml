@@ -1,17 +1,17 @@
 <resources>
-    <string name="app_name">Bora-Lá</string>
+    <string name="app_name">Bóra-Lá</string>
 
     <string name="log_link_senha">Esqueci minha senha!</string>
     <string name="log_bt_entrar">Entrar</string>
-    <string name="log_bt_cadastrar">Cadastre-se no BORA-LÁ</string>
+    <string name="log_bt_cadastrar">Cadastre-se no BÓRA-LÁ</string>
     <string name="log_tex_email">Email</string>
     <string name="log_tex_senha">Senha</string>
     <string name="log_tex_exibir">exibir</string>
     <string name="log_tex_titulo">Seja bem vindo</string>
-    <string name="log_tex_titulo_borala">BORA-LÁ</string>
+    <string name="log_tex_titulo_borala">BÓRA-LÁ</string>
 
     <string name="esq_bt_continuar">Continuar</string>
-    <string name="esq_text">Digite seu CPF para receber uma nova senha por SMS.</string>
+    <string name="esq_text">Digite seu Email para receber uma nova senha por SMS.</string>
     <string name="esq_text_cpf">CPF</string>
     <string name="esq_text_titulo">Esqueci minha Senha</string>
 
@@ -33,7 +33,7 @@
     <string name="cad_text_conf_senha">Confirmação de senha</string>
     <string name="cad_text_info">Sua senha precisa ter de 6 a 10 caracteres, sendo uma letra maiúscula, uma minúscula e um número. Não vale caracteres especiais.</string>
     <string name="cad_text_checkbox_sms_email">Desejo receber os valores referente a carona por SMS e e-mail.</string>
-    <string name="cad_text_checkbox_contrato">Li e estou de acordo com os termos de uso e a política de privacidade do Bora-lá.</string>
+    <string name="cad_text_checkbox_contrato">Li e estou de acordo com os termos de uso e a política de privacidade do Bóra-lá.</string>
     <string name="cad_text_bt">Pronto!</string>
 
     <string name="gp_text_titulo">Grupos de Carona</string>
