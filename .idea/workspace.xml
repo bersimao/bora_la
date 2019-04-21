@@ -11,30 +11,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bbdbffe8-ef94-4206-804a-742c90898463" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/classAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.1/taskHistory/taskHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/BaseActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/BaseActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/CaixaDialogo.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/CaixaDialogo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/CaronaDoDia.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/CaronaDoDia.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/CaroneiroIdaVolta.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/CaroneiroIdaVolta.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/DiaAtual.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/DiaAtual.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/DiaSemanaSelecionado.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/DiaSemanaSelecionado.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/DiasSemana.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/DiasSemana.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/Maps.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/Maps.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/Recorrencia.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/Recorrencia.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/RecurringDates.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/RecurringDates.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/Trajetos.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/Trajetos.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/TrajetosDoDia.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/TrajetosDoDia.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_trajetos.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_trajetos.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_trajetos_do_dia.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_trajetos_do_dia.xml" afterDir="false" />
-    </list>
+    <list default="true" id="bbdbffe8-ef94-4206-804a-742c90898463" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +74,7 @@
     <session id="972445615">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="5" />
+          <entry key="project.closed" value="6" />
           <entry key="project.open.time.17" value="1" />
           <entry key="project.open.time.19" value="2" />
           <entry key="project.open.time.20" value="1" />
@@ -144,38 +121,90 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/Maps.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/CaroneiroIdaVolta.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="178" column="45" selection-start-line="178" selection-start-column="45" selection-end-line="178" selection-end-column="45" />
+            <state relative-caret-position="2074">
+              <caret line="148" column="68" selection-start-line="148" selection-start-column="68" selection-end-line="148" selection-end-column="68" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/GrupoCarona.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-872">
+              <caret line="146" column="81" selection-start-line="146" selection-start-column="81" selection-end-line="146" selection-end-column="81" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/Trajetos.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="5588">
+              <caret line="442" column="80" selection-start-line="442" selection-start-column="80" selection-end-line="442" selection-end-column="80" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/CaroneiroIdaVolta.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/DiaSemanaSelecionado.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="154" column="63" selection-start-line="154" selection-start-column="63" selection-end-line="154" selection-end-column="77" />
+            <state relative-caret-position="-408">
+              <caret line="80" column="84" selection-start-line="80" selection-start-column="84" selection-end-line="80" selection-end-column="84" />
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/DiaAtual.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="767">
+              <caret line="219" column="24" selection-start-line="219" selection-start-column="24" selection-end-line="219" selection-end-column="24" />
+              <folding>
+                <element signature="e#1763#1771#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/Login.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-501">
+              <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build.gradle">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="578">
+              <caret line="34" column="46" selection-start-line="34" selection-start-column="46" selection-end-line="34" selection-end-column="46" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-697">
+              <caret line="49" column="51" selection-start-line="49" selection-start-column="51" selection-end-line="49" selection-end-column="51" />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_caroneiro_ida_volta.xml">
+          <provider selected="true" editor-type-id="text-editor" />
           <provider editor-type-id="android-designer2" />
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-190" />
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/AdicionaCaroneiro.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1059">
-              <caret line="47" column="23" selection-start-line="47" selection-start-column="23" selection-end-line="47" selection-end-column="23" />
-            </state>
-          </provider>
         </entry>
       </file>
     </leaf>
@@ -277,43 +306,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView">
-        <subPane>
-          <expand>
-            <path>
-              <item name="bora_la" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-            </path>
-            <path>
-              <item name="bora_la" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-            </path>
-            <path>
-              <item name="bora_la" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="appprofangela" type="cbb59c9e:AndroidPsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="bora_la" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-            </path>
-            <path>
-              <item name="bora_la" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="layout" type="ddeffd01:AndroidResFolderTypeNode" />
-            </path>
-            <path>
-              <item name="bora_la" type="1abcf292:AndroidViewProjectNode" />
-              <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -357,6 +349,43 @@
       </pane>
       <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="AndroidView">
+        <subPane>
+          <expand>
+            <path>
+              <item name="bora_la" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+            </path>
+            <path>
+              <item name="bora_la" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+            </path>
+            <path>
+              <item name="bora_la" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="appprofangela" type="cbb59c9e:AndroidPsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="bora_la" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+            </path>
+            <path>
+              <item name="bora_la" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+              <item name="layout" type="ddeffd01:AndroidResFolderTypeNode" />
+            </path>
+            <path>
+              <item name="bora_la" type="1abcf292:AndroidViewProjectNode" />
+              <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -536,18 +565,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/Login.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-289">
+        <state relative-caret-position="-501">
           <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_maps.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
           <caret line="30" column="14" selection-start-line="30" selection-start-column="14" selection-end-line="30" selection-end-column="14" />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/NovoGrupo.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -564,24 +593,24 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_esqueci_senha.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor" />
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_drawer_trajetos.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
           <caret line="25" selection-start-line="25" selection-end-line="25" />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_grupo_carona.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="373">
           <caret line="60" column="46" selection-start-line="60" selection-start-column="46" selection-end-line="60" selection-end-column="46" />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/Directions.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/RelatorioDias.java">
@@ -617,8 +646,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/GrupoCarona.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="332">
-          <caret line="291" selection-start-line="291" selection-end-line="291" />
+        <state relative-caret-position="-872">
+          <caret line="146" column="81" selection-start-line="146" selection-start-column="81" selection-end-line="146" selection-end-column="81" />
         </state>
       </provider>
     </entry>
@@ -630,36 +659,36 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_dia_semana_selecionado.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="303">
           <caret line="34" column="46" selection-start-line="34" selection-start-column="46" selection-end-line="34" selection-end-column="46" />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_dias_semana.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="303">
           <caret line="58" column="46" selection-start-line="58" selection-start-column="46" selection-end-line="58" selection-end-column="46" />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_caixa_dialogo.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="303">
           <caret line="97" selection-start-line="97" selection-end-line="97" />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider editor-type-id="android-manifest" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="18" column="59" selection-start-line="18" selection-start-column="59" selection-end-line="18" selection-end-column="59" />
         </state>
       </provider>
+      <provider editor-type-id="android-manifest" />
     </entry>
     <entry file="jar://$PROJECT_DIR$/rfc5545-datetime-0.2.4/rfc5545-datetime-0.2.4.jar!/org/dmfs/rfc5545/DateTime.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -676,20 +705,20 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_dia_atual.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="303">
           <caret line="148" column="46" selection-start-line="148" selection-start-column="46" selection-end-line="148" selection-end-column="46" />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_recorrencia.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="303">
           <caret line="231" selection-start-line="231" selection-end-line="231" />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/rfc5545-datetime-0.2.4/rfc5545-datetime-0.2.4.iml">
       <provider selected="true" editor-type-id="text-editor" />
@@ -703,8 +732,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="628">
-          <caret line="42" column="73" selection-start-line="42" selection-start-column="73" selection-end-line="42" selection-end-column="73" />
+        <state relative-caret-position="578">
+          <caret line="34" column="46" selection-start-line="34" selection-start-column="46" selection-end-line="34" selection-end-column="46" />
         </state>
       </provider>
     </entry>
@@ -716,12 +745,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_trajetos.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3621">
           <caret line="213" selection-start-line="213" selection-end-line="213" selection-end-column="16" />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/Utility.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -732,7 +761,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/DiaAtual.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
+        <state relative-caret-position="767">
           <caret line="219" column="24" selection-start-line="219" selection-start-column="24" selection-end-line="219" selection-end-column="24" />
           <folding>
             <element signature="e#1763#1771#0" expanded="true" />
@@ -742,7 +771,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/Trajetos.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1229">
+        <state relative-caret-position="5588">
           <caret line="442" column="80" selection-start-line="442" selection-start-column="80" selection-end-line="442" selection-end-column="80" />
         </state>
       </provider>
@@ -763,8 +792,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/DiaSemanaSelecionado.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="108" column="71" selection-start-line="108" selection-start-column="71" selection-end-line="108" selection-end-column="71" />
+        <state relative-caret-position="-408">
+          <caret line="80" column="84" selection-start-line="80" selection-start-column="84" selection-end-line="80" selection-end-column="84" />
         </state>
       </provider>
     </entry>
@@ -776,12 +805,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_carona_do_dia.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="16" selection-start-line="16" selection-end-line="19" selection-end-column="35" />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/CaronaDoDia.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -791,12 +820,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_trajetos_do_dia.xml">
-      <provider selected="true" editor-type-id="android-designer2" />
       <provider editor-type-id="text-editor">
         <state relative-caret-position="233">
           <caret line="14" column="39" selection-start-line="14" selection-start-column="39" selection-end-line="14" selection-end-column="39" />
         </state>
       </provider>
+      <provider selected="true" editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/TrajetosDoDia.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -830,15 +859,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_caroneiro_ida_volta.xml">
+      <provider selected="true" editor-type-id="text-editor" />
       <provider editor-type-id="android-designer2" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-190" />
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/fatec/com/br/appprofangela/CaroneiroIdaVolta.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="154" column="63" selection-start-line="154" selection-start-column="63" selection-end-line="154" selection-end-column="77" />
+        <state relative-caret-position="2074">
+          <caret line="148" column="68" selection-start-line="148" selection-start-column="68" selection-end-line="148" selection-end-column="68" />
         </state>
       </provider>
     </entry>
