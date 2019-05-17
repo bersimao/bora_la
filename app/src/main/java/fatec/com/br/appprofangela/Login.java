@@ -1,6 +1,9 @@
 package fatec.com.br.appprofangela;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -76,6 +79,26 @@ public class Login extends AppCompatActivity {
 
     public void entrarSistema(View v){
 
+        boolean connected = false;
+
+        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED || connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED){
+
+            connected = true;
+
+        } else {
+
+            if(internetIsConnnected()){
+
+                connected = true;
+            } else {
+
+                connected = false;
+            }
+        }
+
+
         textInputEmail = findViewById(R.id.text_input_email);
         textInputPassword = findViewById(R.id.text_input_password);
         btnentrar = findViewById(R.id.entrar);
@@ -86,32 +109,42 @@ public class Login extends AppCompatActivity {
 
             btnentrar.setEnabled (true);
             btncadastre.setEnabled(true);
-
             return;
+
         } else{
 
-            btnentrar.setEnabled (false);
+            if(connected){
 
-            Log.i("teste_conexao", textInputEmail.getEditText().getText().toString() + textInputPassword.getEditText().getText().toString());
 
-            ParseUser.logInInBackground(textInputEmail.getEditText().getText().toString(), textInputPassword.getEditText().getText().toString(), new LogInCallback() {
-                @Override
-                public void done(ParseUser user, ParseException e) {
+                btnentrar.setEnabled (false);
 
-                    if (user != null ){
+                Log.i("teste_conexao", textInputEmail.getEditText().getText().toString() + textInputPassword.getEditText().getText().toString());
 
-                        Log.i("Login", "Login Sucessful");
-                        Toast.makeText(Login.this, "Seja bem vindo ao Bóra Lá  ;)", Toast.LENGTH_SHORT).show();
-                        mostrarSistema();
+                ParseUser.logInInBackground(textInputEmail.getEditText().getText().toString(), textInputPassword.getEditText().getText().toString(), new LogInCallback() {
+                    @Override
+                    public void done(ParseUser user, ParseException e) {
 
-                    } else {
+                        if (user != null ){
 
-                        btnentrar.setEnabled (true);
+                            Log.i("Login", "Login Sucessful");
+                            Toast.makeText(Login.this, "Seja bem vindo ao Bóra Lá  ;)", Toast.LENGTH_SHORT).show();
+                            mostrarSistema();
 
-                        Toast.makeText(Login.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        } else {
+
+                            btnentrar.setEnabled (true);
+
+                            Toast.makeText(Login.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                     }
-                }
-            });
+                });
+
+            } else{
+
+                Toast.makeText(Login.this, "Você não está conectado à Internet. :(", Toast.LENGTH_SHORT).show();
+
+            }
+
         }
 
     }
@@ -154,4 +187,37 @@ public class Login extends AppCompatActivity {
 
         ParseAnalytics.trackAppOpenedInBackground(getIntent());
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Login.this, Login.class);
+
+        startActivity(intent);
+
+        finish();
+    }
+
+
+    /*@Override
+    public void onBackPressed() {
+
+        android.os.Process.killProcess(android.os.Process.myPid());
+        // This above line close correctly
+    }*/
+
+
+
+    private boolean internetIsConnnected(){
+        try{
+            String command = "ping -c 1 google.com";
+            return (Runtime.getRuntime().exec(command).waitFor() == 0);
+
+        } catch (Exception e){
+
+            return false;
+        }
+
+
+    }
+
 }

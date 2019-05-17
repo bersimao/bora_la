@@ -67,7 +67,7 @@
             android:id="@+id/salvar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorButton"
+            android:background="@drawable/round_corner_button"
             android:textColor="@color/colorLetraBt"
             android:text="@string/ngp_text_bt"
             android:onClick="NovoGrupo"/>

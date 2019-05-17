@@ -38,6 +38,8 @@
             android:id="@+id/button_salvar_ida_volta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/round_corner_button"
+            android:textColor="@color/colorLetraBt"
             android:text="Salvar" />
 
 

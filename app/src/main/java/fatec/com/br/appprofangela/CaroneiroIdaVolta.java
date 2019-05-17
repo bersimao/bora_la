@@ -25,8 +25,11 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.List;
+
 // TELA PARA ADICIONAR O CARONEIRO NO GRUPO SELECIONADO
 public class CaroneiroIdaVolta extends AppCompatActivity {
 
@@ -51,11 +54,7 @@ public class CaroneiroIdaVolta extends AppCompatActivity {
 
         grupoAtivo = intent.getStringExtra("grupoAtivo");
 
-        opcaoList.add("Ida");
-
-        opcaoList.add("Volta");
-
-        opcaoList.add("Ida e Volta");
+        opcaoList.add("Adicionar Usuário");
 
         opcaoList.add("Remover Usuário");
 
@@ -70,6 +69,26 @@ public class CaroneiroIdaVolta extends AppCompatActivity {
 
         Button salvarButton = findViewById(R.id.button_salvar_ida_volta);
 
+        ParseQuery<ParseUser> queryUser = ParseUser.getQuery();
+
+        queryUser.whereEqualTo("objectId", caroneiroID);
+
+        queryUser.getFirstInBackground(new GetCallback<ParseUser>() {
+            @Override
+            public void done(ParseUser object, ParseException e) {
+                if (e == null) {
+
+                    caroneiroNome.setText(object.getUsername());
+
+                } else {
+
+                    caroneiroNome.setText("Nome do Caroneiro(a)");
+                    Log.i("ADIC.CARONEIRO", e.getMessage());
+
+                }
+            }
+        });
+
         for (int i = 0; i < opcaoList.size(); i++) {
 
             radioButton = new RadioButton(this);
@@ -81,38 +100,35 @@ public class CaroneiroIdaVolta extends AppCompatActivity {
             opcaoRadioGroup.addView(radioButton);
         }
 
-        /*
-        ParseQuery<ParseObject> grupoQuery = ParseQuery.getQuery("GrupoCarona");
-
-        grupoQuery.whereEqualTo("objectId", grupoAtivo);
-
-        grupoQuery.include("usuariosGrupo");
-
-        grupoQuery.getFirstInBackground(new GetCallback<ParseObject>() {
+        salvarButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void done(ParseObject object, ParseException e) {
+            public void onClick(View v) {
 
-                if (e == null) {
+                int opcao = opcaoRadioGroup.getCheckedRadioButtonId();
 
-                    List<ParseObject> usuariosGrupo = object.getList("usuariosGrupo");
+                switch (opcao) {
 
-                    for (ParseObject user : usuariosGrupo) {
-
-                        Log.i("BORALA_DEL1: ", user.getString("username"));
-                        Log.i("BORALA_DEL2: ", caroneiroID);
-                        Log.i("BORALA_DEL3: ", user.getObjectId());
-
-                        if (user.getObjectId() == caroneiroID) {
-
-                            //caroneiroNome.setText(user.getString("username"));
-                            Log.i("BORALA_DEL", user.getString("username"));
-                        }
-                    }
+                    case 0:
+                        adicionarCaroneiro();
+                        Log.i("ADIC.CARONEIRO", "Radio 0");
+                        Toast.makeText(CaroneiroIdaVolta.this, "Adicionado com sucesso!", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 1:
+                        removerCaroneiro();
+                        Log.i("ADIC.CARONEIRO", "Radio 1");
+                        Toast.makeText(CaroneiroIdaVolta.this, "Removido com sucesso!", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        Toast.makeText(CaroneiroIdaVolta.this, "Você não selecionou nenhuma opção", Toast.LENGTH_SHORT).show();
                 }
+
+                Intent intentGrupoCarona = new Intent(CaroneiroIdaVolta.this, GrupoCarona.class);
+                startActivity(intentGrupoCarona);
             }
         });
-*/
-        final ParseObject grupoCarona = ParseObject.createWithoutData("GrupoCarona", grupoAtivo);
+    }
+
+    public void adicionarCaroneiro() { //ParseObject objetoGrupo
 
         ParseQuery<ParseObject> queryGrupoCarona = ParseQuery.getQuery("GrupoCarona");
 
@@ -124,7 +140,8 @@ public class CaroneiroIdaVolta extends AppCompatActivity {
             @Override
             public void done(ParseObject objectGrupo, ParseException e) {
 
-                if(e == null){
+                if (e == null) {
+
 
                     ParseQuery<ParseUser> userParseQuery = ParseUser.getQuery();
 
@@ -134,153 +151,100 @@ public class CaroneiroIdaVolta extends AppCompatActivity {
                         @Override
                         public void done(ParseUser objectUser, ParseException e) {
 
-                            if(e == null){
+                            if (e == null) {
 
-                                opcaoRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                                    @Override
-                                    public void onCheckedChanged(RadioGroup group, int checkedId) {
+                                objectGrupo.addUnique("usuariosGrupo", objectUser);
+                                objectGrupo.saveInBackground();
 
-                                        if(checkedId == 3){
-
-                                            List<ParseUser> usuariosGrupo = objectGrupo.getList("usuariosGrupo");
-
-                                            usuariosGrupo.remove(objectUser);
-
-                                            objectGrupo.saveInBackground(new SaveCallback() {
-                                                @Override
-                                                public void done(ParseException e) {
-
-                                                    if(e==null){
-
-                                                        Log.i("ADIC.CARONEIRO", "Caroneiro Removido");
-                                                    } else {
-                                                        Log.i("ADIC.CARONEIRO", e.getMessage());
-                                                    }
-                                                }
-                                            });
-
-                                        }
-
-                                    }
-                                });
                             }
                         }
                     });
-
                 }
+
+                objectGrupo.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+
+                        if (e == null) {
+                            Log.i("ADIC.CARONEIRO", "Caroneiro Removido");
+                        } else {
+                            Log.i("ADIC.CARONEIRO", e.getMessage());
+                        }
+                    }
+                });
             }
         });
+    }
 
+    public void removerCaroneiro() { //ParseObject objetoGrupo
 
+        ParseQuery<ParseObject> queryGrupoCarona = ParseQuery.getQuery("GrupoCarona");
 
+        queryGrupoCarona.whereEqualTo("objectId", grupoAtivo);
 
+        queryGrupoCarona.include("usuariosGrupo");
 
-
-/*
-        ParseQuery<ParseUser> userParseQuery = ParseUser.getQuery();
-
-        userParseQuery.whereEqualTo("objectId", caroneiroID);
-
-        userParseQuery.getFirstInBackground(new GetCallback<ParseUser>() {
+        queryGrupoCarona.getFirstInBackground(new GetCallback<ParseObject>() {
             @Override
-            public void done(final ParseUser object, ParseException e) {
+            public void done(ParseObject objectGrupo, ParseException e) {
 
                 if (e == null) {
 
-                    caroneiroNome.setText(object.getUsername());
+                    ParseQuery<ParseUser> userParseQuery = ParseUser.getQuery();
 
-                    opcaoRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    userParseQuery.whereEqualTo("objectId", caroneiroID);
+
+                    userParseQuery.getFirstInBackground(new GetCallback<ParseUser>() {
                         @Override
-                        public void onCheckedChanged(RadioGroup group, int checkedId) {
+                        public void done(ParseUser objectUser, ParseException e) {
 
-                            Log.i("BORA_IdaVolta", String.valueOf(checkedId));
+                            if (e == null) {
 
-                            //try {
-                            if (checkedId == 3) {
+                                Log.i("ADC.CARONEIRO", objectUser.getUsername());
 
-                                ParseQuery<ParseObject> grupoQuery = ParseQuery.getQuery("GrupoCarona");
-                                grupoQuery.whereEqualTo("objectId", grupoAtivo);
-                                grupoQuery.include("usuariosGrupo");
+                                List<ParseUser> usuariosGrupo = objectGrupo.getList("usuariosGrupo");
 
-                                grupoQuery.getFirstInBackground(new GetCallback<ParseObject>() {
-                                    @Override
-                                    public void done(ParseObject objectList, ParseException e) {
+                                JSONArray novaLista = new JSONArray();
 
-                                        if (e == null) {
+                                Log.i("ADC.CARONEIRO", usuariosGrupo.toString());
 
-                                            List<ParseObject> usuariosGrupo = objectList.getList("usuariosGrupo");
-                                            usuariosGrupo.remove(object);
-                                        }
+                                for (int i = 0; i < usuariosGrupo.size(); i++) {
+
+                                    Log.i("ADC.CARONEIRO", "Caroneiros da Lista: " + usuariosGrupo.get(i).getUsername());
+
+                                    if (!usuariosGrupo.get(i).getObjectId().equals(objectUser.getObjectId())) {
+
+                                        novaLista.put(usuariosGrupo.get(i));
+
+                                        Log.i("ADC.CARONEIRO", "Usuário da nova lista: " + usuariosGrupo.get(i).getUsername());
+
+                                    } else {
+
+                                        Log.i("ADC.CARONEIRO", "A List irá remover o objeto " + usuariosGrupo.get(i).getUsername());
                                     }
-                                });
+                                }
 
-                                //object.remove("usuariosGrupo");
-                            }
+                                objectGrupo.remove("usuariosGrupo");
 
-                            //} catch (Exception e){
+                                objectGrupo.put("usuariosGrupo", novaLista);
 
-                            //    Toast.makeText(CaroneiroIdaVolta.this, "Caroneiro Não Pertence ao Grupo.", Toast.LENGTH_SHORT).show();
-                            // }
-
-                            switch (checkedId) {
-
-                                case 0:
-                                    grupoCarona.addUnique("usuariosIda", object);
-                                    grupoCarona.addUnique("usuariosGrupo", object);
-                                    break;
-                                case 1:
-                                    grupoCarona.addUnique("usuariosVolta", object);
-                                    grupoCarona.addUnique("usuariosGrupo", object);
-                                    break;
-                                case 2:
-                                    grupoCarona.addUnique("usuariosGrupo", object);
-
-                                default:
+                                objectGrupo.saveInBackground();
                             }
                         }
                     });
-
-                } else {
-
                 }
-            }
-        });
 
-        */
+                objectGrupo.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
 
-/*
-        opcaoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                CheckedTextView checkedTextView = (CheckedTextView) view;
-                //checkedTextView.setChecked(!checkedTextView.isChecked());
-
-                for(int i = 0; i < 3; i++){
-
-                    if(checkedTextView.isChecked()){
-                        int ck = position;
-
-                        checkedTextView.setChecked(true);
-
-                    } else {
-                        checkedTextView.setChecked(true);
+                        if (e == null) {
+                            Log.i("ADIC.CARONEIRO", "Caroneiro Removido");
+                        } else {
+                            Log.i("ADIC.CARONEIRO", e.getMessage());
+                        }
                     }
-
-                }
-                    Log.i("BORA_IdaVolta", String.valueOf(position));
-            }
-        });
-*/
-
-        salvarButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //grupoCarona.saveInBackground();
-
-                Intent intentGrupoCarona = new Intent(CaroneiroIdaVolta.this, GrupoCarona.class);
-                startActivity(intentGrupoCarona);
+                });
             }
         });
     }

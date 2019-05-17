@@ -1,6 +1,8 @@
 package fatec.com.br.appprofangela;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -28,6 +31,7 @@ public class AdicionaCaroneiro extends AppCompatActivity {
     ArrayList<String> caroneirosResultado = new ArrayList<>();
     ArrayList<String> caroneirosId = new ArrayList<>();
     ArrayList<String> userID = new ArrayList<String>();
+    EditText editTextCaroneiroPesquisa;
     String grupoAtivo = "";
     Button botaoPesquisaCaroneiro;
 
@@ -36,6 +40,8 @@ public class AdicionaCaroneiro extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adiciona_caroneiro);
+
+        editTextCaroneiroPesquisa = findViewById(R.id.editText_caroneiro_pesquisa);
 
         final Intent intent = getIntent();
 
@@ -53,6 +59,10 @@ public class AdicionaCaroneiro extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                String nomePesquisado = "";
+
+                nomePesquisado = editTextCaroneiroPesquisa.getText().toString();
+
                 caroneirosPesquisa.clear();
 
                 final ParseQuery<ParseObject> query = ParseQuery.getQuery("GrupoCarona");// Primeira busca para saber os usuários que já estão no grupo.
@@ -61,6 +71,7 @@ public class AdicionaCaroneiro extends AppCompatActivity {
 
                 query.include("usuariosGrupo");
 
+                String finalNomePesquisado = nomePesquisado;
                 query.getFirstInBackground(new GetCallback<ParseObject>() {
                     @Override
                     public void done(final ParseObject object, ParseException e) {
@@ -80,6 +91,10 @@ public class AdicionaCaroneiro extends AppCompatActivity {
 
                             queryUser.whereNotContainedIn("objectId", caroneirosResultado);
 
+                            if(editTextCaroneiroPesquisa.getText().length() > 0){
+                                queryUser.whereContains("nome", finalNomePesquisado);
+                            }
+
                             queryUser.findInBackground(new FindCallback<ParseUser>() {
                                 @Override
                                 public void done(List<ParseUser> objects, ParseException e) {
@@ -90,7 +105,7 @@ public class AdicionaCaroneiro extends AppCompatActivity {
 
                                             for (ParseUser user : objects) {
 
-                                                caroneirosPesquisa.add(user.getUsername());
+                                                caroneirosPesquisa.add(user.getString("nome"));
                                                 userID.add(user.getObjectId());
 
                                             }
@@ -114,15 +129,38 @@ public class AdicionaCaroneiro extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                String stringUserID = userID.get(position);
+                //String stringUserID = userID.get(position);
 
-                Intent intentCaroneiroIdaVolta = new Intent(AdicionaCaroneiro.this, CaroneiroIdaVolta.class);
+
+                new AlertDialog.Builder(AdicionaCaroneiro.this)
+                        .setTitle("Inserir Carona")
+                        .setMessage("Incluir este caroneiro no grupo?")
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(R.drawable.ic_add_person_add_black_24dp) //setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                String stringUserID = userID.get(position);
+
+                                BaseActivity.adicionarCaroneiro(stringUserID);
+
+                                Intent intentGrupoCarona = new Intent(AdicionaCaroneiro.this, GrupoCarona.class);
+                                startActivity(intentGrupoCarona);
+
+                                Toast.makeText(AdicionaCaroneiro.this, "Caroneiro Adicionado com Sucesso!", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+
+                        .show();
+
+               /* Intent intentCaroneiroIdaVolta = new Intent(AdicionaCaroneiro.this, CaroneiroIdaVolta.class);
 
                 intentCaroneiroIdaVolta.putExtra("CaroneiroID", stringUserID);
 
                 intentCaroneiroIdaVolta.putExtra("grupoAtivo", grupoAtivo);
 
-                startActivity(intentCaroneiroIdaVolta);
+                startActivity(intentCaroneiroIdaVolta);*/
             }
         });
     }

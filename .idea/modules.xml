@@ -4,10 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/bora_la.iml" filepath="$PROJECT_DIR$/bora_la.iml" />
-<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/rfc5545-datetime-0.2.4/rfc5545-datetime-0.2.4.iml" filepath="$PROJECT_DIR$/rfc5545-datetime-0.2.4/rfc5545-datetime-0.2.4.iml" />
-=======
->>>>>>> RF002F
     </modules>
   </component>
 </project>

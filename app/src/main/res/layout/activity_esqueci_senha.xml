@@ -92,8 +92,8 @@
                 android:id="@+id/esq_bt_continuar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorButton"
                 android:text="@string/esq_bt_continuar"
+                android:background="@drawable/round_corner_button"
                 android:textColor="@color/colorLetraBt"
                 android:onClick="retornoLogin"/>
         </LinearLayout>

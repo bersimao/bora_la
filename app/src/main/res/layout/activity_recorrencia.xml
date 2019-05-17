@@ -208,9 +208,9 @@
                 android:layout_gravity="center|center_horizontal"
                 android:layout_margin="15dp"
                 android:layout_weight="1"
-                android:background="@color/colorButton"
-                android:fontFamily="@font/nunito_regular"
+                android:background="@drawable/round_corner_button"
                 android:textColor="@color/colorLetraBt"
+                android:fontFamily="@font/nunito_regular"
                 style="?android:attr/buttonBarButtonStyle"
                 android:text="Cancelar"/>
             <Button
@@ -220,11 +220,11 @@
                 android:layout_gravity="center|center_horizontal"
                 android:layout_margin="15dp"
                 android:layout_weight="1"
-                android:background="@color/colorButton"
+                android:background="@drawable/round_corner_button"
+                android:textColor="@color/colorLetraBt"
                 android:fontFamily="@font/nunito_regular"
                 android:foregroundGravity="center"
                 android:text="Salvar"
-                android:textColor="@color/colorLetraBt"
                 style="?android:attr/buttonBarButtonStyle"/>
         </LinearLayout>
     </LinearLayout>

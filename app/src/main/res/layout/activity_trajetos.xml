@@ -19,21 +19,29 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/fab_margin"
             android:orientation="vertical"
-            android:layout_marginEnd="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <!--            <ProgressBar
+                            android:id="@+id/loadingPanel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="?android:attr/progressBarStyleSmall"
+                            android:layout_gravity="center|center_vertical"
+                            android:visibility="invisible"
+                            android:indeterminate="true" /> -->
+
             <LinearLayout
                 android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/lg_borala"
-                    android:layout_width="20dp"
+                    android:layout_width="1dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/lg_borala_vetor_branco" />
@@ -41,26 +49,30 @@
                 <TextView
                     android:id="@+id/textViewTrajetos"
                     android:layout_width="240dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
+                    android:text="Cadastro de Novos Trajetos"
                     android:textColor="@color/colorLetraTitulo"
                     android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:text="Trajetos"/>
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textView_motorista_trajeto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="Motorista:"
+                    android:gravity="center"
+                    android:text="Motorista: "
                     android:textColor="@color/colorLetraTitulo"
                     android:textSize="20dp"
                     android:textStyle="bold" />
@@ -68,200 +80,251 @@
                 <Spinner
                     android:id="@+id/spinner_motoristas_trajeto"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="1"
-                    android:textSize="20dp"
-                    android:autofillHints="Escolha um motorista" />
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:autofillHints="Escolha um motorista"
+                    android:textSize="20dp" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/textViewIda"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="Locail Inicial"
-                android:textColor="@color/colorLetraTitulo"
-                android:textSize="20dp"
-                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal"
-                android:layout_margin="@dimen/fab_margin"
-                style="?android:attr/buttonBarStyle">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textViewIda"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Locail Inicial: "
+                    android:textColor="@color/colorLetraTitulo"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/edit_text_endereco_local_inicial"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:ems="13"
-                    android:hint="Endereço Local Inicial"
+                    android:hint="Endereço do Local Inicial"
                     android:inputType="textPersonName" />
 
-                <ImageButton
-                    android:id="@+id/imageButton_pesq_local_inicial"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@color/colorButton"
-                    android:fontFamily="@font/nunito_regular"
-                    android:textColor="@color/colorLetraBt"
-                    app:srcCompat="@drawable/ic_menu_search" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/textview_trajetos_participantes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="Participantes e Destinos"
-                android:textColor="@color/colorLetraTitulo"
-                android:textSize="20dp"
-                android:textStyle="bold" />
 
-            <ListView
-                android:id="@+id/list_view_trajetos_participantes"
+            <!--                <ImageButton
+                                android:id="@+id/imageButton_pesq_local_inicial"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:background="@color/colorButton"
+                                android:fontFamily="@font/nunito_regular"
+                                android:textColor="@color/colorLetraBt"
+                                app:srcCompat="@drawable/ic_menu_search" /> -->
+            <View
+                android:id="@+id/divider1"
                 android:layout_width="match_parent"
-                android:layout_height="125dp" />
-
-            <Button
-                android:id="@+id/button_adicionar_destinos_participantes"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="1dp"
                 android:layout_weight="1"
-                android:background="@color/colorButton"
-                android:fontFamily="@font/nunito_regular"
-                android:textColor="@color/colorLetraBt"
-                android:text="Adicionar Destinos" />
-
-            <TextView
-                android:id="@+id/textview_recorrencia"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="Recorrencia"
-                android:textColor="@color/colorLetraTitulo"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+                android:background="?android:attr/listDivider" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:orientation="horizontal"
-                style="?android:attr/buttonBarStyle">
-
-                <TextView
-                    android:id="@+id/textViewDataInicial"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"
-                    android:text="A partir do dia: "
-                    android:textColor="@color/colorLetraTitulo"
-                    android:textSize="20dp"
-                    android:textStyle="normal" />
-
-                <EditText
-                    android:id="@+id/editTextCalendario"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:inputType="textPersonName"
-                    android:hint="data inicial"
-                    android:clickable="true"
-                    android:cursorVisible="false"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:longClickable="false"/>
-            </LinearLayout>
-
-            <RadioGroup
-                android:id="@+id/radio_group_recorrencia"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="25dp"
                 android:orientation="vertical">
 
-                <RadioButton
-                    android:id="@+id/radioButton_todo_dia"
+                <TextView
+                    android:id="@+id/textview_trajetos_participantes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Todo dia" />
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="Participantes e Destinos"
+                    android:textColor="@color/colorLetraTitulo"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
 
-                <RadioButton
-                    android:id="@+id/radioButton_toda_semana"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Toda semana" />
 
-                <RadioButton
-                    android:id="@+id/radioButton_todo_mes"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Todo mês" />
+                <ListView
+                    android:id="@+id/list_view_trajetos_participantes"
+                    android:layout_width="350dp"
+                    android:layout_height="125dp" />
 
-                <RadioButton
-                    android:id="@+id/radioButton_todo_ano"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Todo ano" />
-            </RadioGroup>
+                <Button
+                    android:id="@+id/button_adicionar_destinos_participantes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:background="@drawable/round_corner_button"
+                    android:fontFamily="@font/nunito_regular"
+                    android:padding="5dp"
+                    android:text="Adicionar Destinos"
+                    android:textColor="@color/colorLetraBt" />
 
-            <Button
-                android:id="@+id/button_outra_recorrencia"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="10dp"
-                android:layout_weight="1"
-                android:background="@color/colorButton"
-                android:fontFamily="@font/nunito_regular"
-                android:text="Personalizar"
-                android:textColor="@color/colorLetraBt" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView_resumo_recorrencia"
+            <View
+                android:id="@+id/divider2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/nunito_regular"
-                android:textColor="@color/colorLetraTitulo"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="?android:attr/listDivider" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal"
-                android:layout_margin="@dimen/fab_margin"
-                style="?android:attr/buttonBarStyle">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textview_recorrencia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Recorrencia"
+                    android:textColor="@color/colorLetraTitulo"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    style="?android:attr/buttonBarStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textViewDataInicial"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:gravity="bottom"
+                        android:text="A partir do dia: "
+                        android:textColor="@color/colorLetraTitulo"
+                        android:textSize="20dp"
+                        android:textStyle="normal" />
+
+                    <EditText
+                        android:id="@+id/editTextCalendario"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:clickable="true"
+                        android:cursorVisible="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:gravity="bottom|center_vertical"
+                        android:hint="data inicial"
+                        android:inputType="textPersonName"
+                        android:longClickable="false" />
+                </LinearLayout>
+
+                <RadioGroup
+                    android:id="@+id/radio_group_recorrencia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/radioButton_todo_dia"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Todo dia" />
+
+                    <RadioButton
+                        android:id="@+id/radioButton_toda_semana"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Toda semana" />
+
+                    <RadioButton
+                        android:id="@+id/radioButton_todo_mes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Todo mês" />
+
+                    <RadioButton
+                        android:id="@+id/radioButton_todo_ano"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Todo ano" />
+                </RadioGroup>
+
+                <Button
+                    android:id="@+id/button_outra_recorrencia"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/round_corner_button"
+                    android:fontFamily="@font/nunito_regular"
+                    android:padding="5dp"
+                    android:text="Personalizar"
+                    android:textColor="@color/colorLetraBt" />
+
+                <TextView
+                    android:id="@+id/textView_resumo_recorrencia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/nunito_regular"
+                    android:textColor="@color/colorLetraTitulo"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="30dp"
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/button_cancelar_trajetos"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center|center_horizontal"
-                    android:layout_margin="15dp"
-                    android:layout_weight="1"
-                    android:background="@color/colorButton"
-                    android:fontFamily="@font/nunito_regular"
-                    android:textColor="@color/colorLetraBt"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:text="Cancelar"/> />
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:layout_gravity="center|center_horizontal"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/round_corner_button"
+                    android:fontFamily="@font/nunito_regular"
+                    android:padding="5dp"
+                    android:text="Cancelar"
+                    android:textColor="@color/colorLetraBt" />
 
                 <Button
                     android:id="@+id/button_salvar_trajetos"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="28dp"
                     android:layout_gravity="center|center_horizontal"
-                    android:layout_margin="15dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="40dp"
                     android:layout_weight="1"
-                    android:background="@color/colorButton"
+                    android:background="@drawable/round_corner_button"
                     android:fontFamily="@font/nunito_regular"
                     android:foregroundGravity="center"
+                    android:padding="5dp"
                     android:text="Salvar"
-                    android:textColor="@color/colorLetraBt"
-                    style="?android:attr/buttonBarButtonStyle" />
+                    android:textColor="@color/colorLetraBt" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

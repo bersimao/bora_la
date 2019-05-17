@@ -22,7 +22,7 @@
 
     <include layout="@layout/activity_trajetos" />
 
-    <include layout="@layout/app_floatingbutton" />
+    <!-- <include layout="@layout/app_floatingbutton" /> -->
 
 
 </android.support.design.widget.CoordinatorLayout>

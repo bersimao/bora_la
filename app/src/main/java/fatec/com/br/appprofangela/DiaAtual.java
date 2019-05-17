@@ -1,23 +1,32 @@
 package fatec.com.br.appprofangela;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.LoginFilter;
+import android.text.method.PasswordTransformationMethod;
+import android.text.method.SingleLineTransformationMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +56,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import scala.util.regexp.Base;
+
 import static java.time.Month.JANUARY;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
@@ -63,8 +74,13 @@ public class DiaAtual extends AppCompatActivity
     SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
     String formattedDate;
     TextView dataAtual;
+    EditText editTextNomeGrupo;
+    ImageButton imageButtonEdit;
     Button botaoMaps, botaoTrajetos, botaoAdicionaCaroneiro, botaoRelatorio;
     ListView caroneirosListView;
+
+
+    boolean isPressed = false;
 
 
     //============== MÉTODOS DA GAVETA LATERAL ============= INÍCIO
@@ -76,6 +92,13 @@ public class DiaAtual extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+        BaseActivity.dataSelecionadaCalendario = "";
+
+        Intent intent = new Intent(DiaAtual.this, GrupoCarona.class);
+
+        startActivity(intent);
+
+        finish();
     }
 
     @Override
@@ -167,6 +190,14 @@ public class DiaAtual extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 //============== GAVETA LATERAL =============
 
+        editTextNomeGrupo = findViewById(R.id.editText_nome_grupo);
+
+        imageButtonEdit = findViewById(R.id.imageButton_edit);
+
+        imageButtonEdit.setBackgroundResource(R.drawable.ic_baseline_create_24px_edit);
+
+        editTextNomeGrupo.setEnabled(false);
+
         botaoMaps = findViewById(R.id.buttonMapas);
 
         botaoTrajetos = findViewById(R.id.buttonTrajetos);
@@ -177,7 +208,20 @@ public class DiaAtual extends AppCompatActivity
 
         caroneirosListView = findViewById(R.id.ListaCaroneiros);
 
-        grupoAtivo = intent.getStringExtra("IdGrupo");
+        BaseActivity.setListViewHeightBasedOnChildren(caroneirosListView);
+
+//METODO PARA QUE O SCROLL DA LIST VIEW FUNCIONE DENTRO DE OUTRA SCROLL VIEW
+        caroneirosListView.setOnTouchListener(new View.OnTouchListener() {
+            // Setting on Touch Listener for handling the touch inside ScrollView
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // Disallow the touch request for parent scroll on touch of child view
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
+
+        grupoAtivo = BaseActivity.grupoSelecionadoId; //intent.getStringExtra("IdGrupo");
 
         arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, Caroneiros);
 
@@ -185,9 +229,13 @@ public class DiaAtual extends AppCompatActivity
 
         dataAtual = findViewById(R.id.textViewDia);
 
-        dataAtual.setText(formattedDate);
+        //dataAtual.setText(formattedDate);
+
+        dataAtual.setText("Página Inicial");
 
         CalendarView calendarView = findViewById(R.id.calendarView1);
+
+        Log.i("DIA.ATUAL.VER1", BaseActivity.dataSelecionadaCalendario);
 
 
 // QUERY PARA ENCONTRAR OS CARONEIROS DO GRUPO
@@ -202,14 +250,20 @@ public class DiaAtual extends AppCompatActivity
 
                 if (e == null) {
 
+                    BaseActivity.nomeGrupo = object.getString("nomeGrupo");
+
+                    editTextNomeGrupo.setText(BaseActivity.nomeGrupo);
+
+                    imageButtonEdit.setOnClickListener(imgButtonHandler);
+
                     List<ParseObject> usuariosGrupo = object.getList("usuariosGrupo");
 
                     Collections.sort(usuariosGrupo, new Comparator<ParseObject>() { // COMPARAÇÃO DOS NOMES DOS USUÁRIOS PARA ORDENAÇÃO CRESCENTE
                         @Override
                         public int compare(ParseObject o1, ParseObject o2) {
 
-                            String string1 = o1.getString("username");
-                            String string2 = o2.getString("username");
+                            String string1 = o1.getString("nome");
+                            String string2 = o2.getString("nome");
 
                             return string1.compareToIgnoreCase(string2);
                         }
@@ -217,7 +271,7 @@ public class DiaAtual extends AppCompatActivity
 
                     for (ParseObject user : usuariosGrupo) { //PERCORRE OS OBJETOS ENCOTRADOS
 
-                        Caroneiros.add(user.getString("username")); //ADICIONA O NOME DOS CARONEIROS NO ARRAY
+                        Caroneiros.add(user.getString("nome")); //ADICIONA O NOME DOS CARONEIROS NO ARRAY
                         CaroneirosId.add(user.getObjectId()); //ADICIONA O Id DOS CARONEIROS EM OUTRO ARRAY PARA CONTROLE
 
                         Log.i("BORALA_Pesq ", user.getObjectId());
@@ -228,13 +282,13 @@ public class DiaAtual extends AppCompatActivity
                     arrayAdapter.notifyDataSetChanged();
                     caroneirosListView.setAdapter(arrayAdapter);
 
+                    findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+
                 } else {
                     Log.i("BORALA_DiaAtual", e.getMessage()); //LOG DE CONTROLE DE ERROS
                 }
             }
         });
-
-
 
 
 // TRATAMENTO DAS DATAS DO CALENDÁRIO
@@ -256,9 +310,9 @@ public class DiaAtual extends AppCompatActivity
 
                 Log.i("DiaAtual_D.Semana", Integer.toString(dayOfWeek));
 
-                BaseActivity.dataSelecionadaCalendario = ano+"-"+mes+"-"+dia;
+                BaseActivity.dataSelecionadaCalendario = ano + "-" + mes + "-" + dia;
 
-
+                Log.i("DIA.ATUAL.VER", BaseActivity.dataSelecionadaCalendario);
 
                 final Intent intentCaronaDoDia = new Intent().setClass(DiaAtual.this, CaronaDoDia.class);
 
@@ -266,17 +320,17 @@ public class DiaAtual extends AppCompatActivity
                 intentCaronaDoDia.putExtra("passmes", mes);
                 intentCaronaDoDia.putExtra("passano", ano);
                 intentCaronaDoDia.putExtra("grupoAtivo", grupoAtivo);
-                intentCaronaDoDia.putExtra("caroneirosList", Caroneiros);
+                //intentCaronaDoDia.putExtra("caroneirosList", Caroneiros);
 
-                final ParseObject objetoGrupo = ParseObject.createWithoutData("GrupoCarona", grupoAtivo);
+                //final ParseObject objetoGrupo = ParseObject.createWithoutData("GrupoCarona", grupoAtivo);
 
-                ParseQuery<ParseObject> query = ParseQuery.getQuery("Calendario");
+                //ParseQuery<ParseObject> query = ParseQuery.getQuery("Calendario");
 
-                query.whereEqualTo("pointerGrupoCarona", objetoGrupo);
+                //query.whereEqualTo("pointerGrupoCarona", objetoGrupo);
 
-                query.whereFullText("data", ano + mes + dia);
+                //query.whereFullText("data", ano + mes + dia);
 
-                query.getFirstInBackground(new GetCallback<ParseObject>() {
+      /*          query.getFirstInBackground(new GetCallback<ParseObject>() {
                     @Override
                     public void done(ParseObject object, ParseException e) {
 
@@ -306,7 +360,7 @@ public class DiaAtual extends AppCompatActivity
                         }
 
                     }
-                });
+                }); */
 
                 DiaAtual.this.startActivity(intentCaronaDoDia);
             }
@@ -350,18 +404,41 @@ public class DiaAtual extends AppCompatActivity
         caroneirosListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String stringUserID = CaroneirosId.get(position);
-                Intent intentCaroneiroIdaVolta = new Intent(DiaAtual.this, CaroneiroIdaVolta.class);
-                intentCaroneiroIdaVolta.putExtra("CaroneiroID", stringUserID);
-                intentCaroneiroIdaVolta.putExtra("grupoAtivo", grupoAtivo);
-                startActivity(intentCaroneiroIdaVolta);
+                Toast.makeText(DiaAtual.this, "Pressione e Segure para Excluir.", Toast.LENGTH_SHORT).show();
             }
         });
 
+        caroneirosListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                new AlertDialog.Builder(DiaAtual.this)
+                        .setTitle("Deletar Usuário")
+                        .setMessage("Tem certeza que deseja excluir este usuário ?")
+                        .setNegativeButton(android.R.string.no, null)
+                        .setIcon(R.drawable.ic_warning_black_24dp) //setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                String stringUserID = CaroneirosId.get(position);
+
+                                BaseActivity.removerCaroneiro(stringUserID);
+
+                                Intent intentGrupoCarona = new Intent(DiaAtual.this, GrupoCarona.class);
+                                startActivity(intentGrupoCarona);
+
+                                Toast.makeText(DiaAtual.this, "Caroneiro Removido com Sucesso!", Toast.LENGTH_SHORT).show();
+
+                            }
+                        })
+
+                        .show();
 
 
-
-
+                return true;
+            }
+        });
 
 
         // CÓDIGO ANTIGO
@@ -398,4 +475,38 @@ public class DiaAtual extends AppCompatActivity
 */
     }
 
+    View.OnClickListener imgButtonHandler = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            if (isPressed) {
+                imageButtonEdit.setBackgroundResource(R.drawable.ic_baseline_create_24px_edit);
+                BaseActivity.nomeGrupo = editTextNomeGrupo.getText().toString();
+                editTextNomeGrupo.setEnabled(false);
+                Log.i("PEN", BaseActivity.nomeGrupo);
+
+
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("GrupoCarona");
+
+                query.whereEqualTo("objectId", grupoAtivo);
+
+                query.getFirstInBackground(new GetCallback<ParseObject>() {
+                    @Override
+                    public void done(ParseObject object, ParseException e) {
+
+                        object.put("nomeGrupo", BaseActivity.nomeGrupo);
+                        object.saveInBackground();
+
+                    }
+                });
+
+            } else {
+                imageButtonEdit.setBackgroundResource(R.drawable.ic_baseline_done_24px_confirm);
+                editTextNomeGrupo.setEnabled(true);
+                //editTextNomeGrupo.setTransformationMethod(SingleLineTransformationMethod.getInstance());
+                Log.i("CHECK", BaseActivity.nomeGrupo);
+            }
+            isPressed = !isPressed;
+        }
+    };
 }

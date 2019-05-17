@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -34,6 +35,8 @@ import java.util.List;
 public class GrupoCarona extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    ParseUser currentUser = ParseUser.getCurrentUser();
+
 
     //============== MÉTODOS PARA A DRAWER ==============
     @Override
@@ -44,13 +47,21 @@ public class GrupoCarona extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+
+        Intent intent = new Intent(GrupoCarona.this, Login.class);
+
+        startActivity(intent);
+
+        finish();
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -97,7 +108,7 @@ public class GrupoCarona extends AppCompatActivity
         return true;
     }
 
-    public void sairSistema(){
+    public void sairSistema() {
         Intent intent = new Intent(this, Login.class);
         startActivity(intent);
     }
@@ -105,10 +116,13 @@ public class GrupoCarona extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_drawer_grupo_carona);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("Bora-lá");
+
+        BaseActivity.dataSelecionadaCalendario = "";
 
         //============== DRAWER =============
         //==============BOTÃO FLUTUANTE PARA ADICIONAR GRUPOS DE CARONA =============
@@ -157,19 +171,42 @@ public class GrupoCarona extends AppCompatActivity
 
                 if (e == null) {
 
-                    if (objects.size() > 0){
+                    if (objects.size() > 0) {
 
-                        for(ParseObject nomeGrupo : objects){
+                        for (ParseObject nomeGrupo : objects) {
 
                             Carona.add(nomeGrupo.getString("nomeGrupo"));
                             GrupoID.add(nomeGrupo.getObjectId());
 
                         }
 
-                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(GrupoCarona.this, android.R.layout.simple_list_item_1, Carona);
+                        //ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(GrupoCarona.this, android.R.layout.simple_list_item_1, Carona);
+
+                        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
+                                (GrupoCarona.this, android.R.layout.simple_list_item_1, Carona){
+                            @Override
+                            public View getView(int position, View convertView, ViewGroup parent){
+                                // Get the current item from ListView
+                                View view = super.getView(position,convertView,parent);
+
+                                // Get the Layout Parameters for ListView Current Item View
+                                ViewGroup.LayoutParams params = view.getLayoutParams();
+
+                                // Set the height of the Item View
+                                params.height = 150;
+                                view.setLayoutParams(params);
+
+                                return view;
+                            }
+                        };
+
+                        findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+
                         arrayAdapter.notifyDataSetChanged();
 
                         GruposCaronaListView.setAdapter(arrayAdapter);
+
+
                     }
                 }
             }
@@ -212,13 +249,13 @@ public class GrupoCarona extends AppCompatActivity
 
                             List<ParseObject> usuariosGrupo = object.getList("usuariosGrupo");
 
-                            for( ParseObject user : usuariosGrupo){
+                            for (ParseObject user : usuariosGrupo) {
 
-                                Caroneiros.add(user.getString("username"));
+                                Caroneiros.add(user.getString("nome"));
                                 CaroneirosId.add(user.getObjectId());
 
                                 String nome = user.getObjectId();
-                                String nome2 = user.getString("username");
+                                String nome2 = user.getString("nome");
                                 Log.i("BORALA_ARRAY2", nome + nome2);
 
                             }
@@ -238,6 +275,15 @@ public class GrupoCarona extends AppCompatActivity
                         }
                     }
 
+                });
+
+                GruposCaronaListView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+
+
+                        return true;
+                    }
                 });
 
 

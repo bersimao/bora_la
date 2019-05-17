@@ -102,9 +102,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/log_bt_entrar"
+                android:background="@drawable/round_corner_button"
                 android:textColor="@color/colorLetraBt"
                 android:fontFamily="@font/nunito_regular"
-                android:background="@color/colorButton"
                 android:onClick="entrarSistema"
                 android:textStyle="bold" />
 
@@ -131,9 +131,9 @@
                 android:id="@+id/button2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorLetraBt"
                 android:textStyle="bold"
-                android:background="@color/colorButton"
+                android:background="@drawable/round_corner_button"
+                android:textColor="@color/colorLetraBt"
                 android:onClick="AbrirCadastro"
                 android:text="@string/log_bt_cadastrar" />
 

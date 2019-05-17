@@ -5,7 +5,9 @@
     <color name="colorAccent">#f2cc8a</color>
     <color name="colorFundoPadrao">#666666</color>
     <color name="colorLetraTitulo">#FDFEFE</color>
-    <color name="colorLetraBt">#ff7970</color>
+<!--    <color name="colorLetraBt">#ff7970</color> -->
+    <color name="colorLetraBt">#000000</color>
     <color name="colorButton">#FDFEFE</color>
     <color name="colorInfoText">#fdfefe</color>
+    <color name="colorRelatorio">#F7D7B1</color>
 </resources>

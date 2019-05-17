@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -48,13 +49,85 @@ import static java.time.temporal.ChronoUnit.DAYS;
 
 public class RecurringDates {
 
-    public static String currentDay() {
+    private static int nDiasRecorrencia = 0;
+
+    public static LocalDate currentDay() {
 
         LocalDate start = new LocalDate(LocalDate.now());
 
-        String dataAtual = start.toString();
+        //String dataAtual = start.toString();
 
-        return dataAtual;
+        return start;
+    }
+
+    public static int numberOfDays(int year, int month) {
+
+        currentDay().getMonthOfYear();
+
+        int daysInMonth = 0;
+
+        Log.i("RECURR.DATA.ATUAL", "CurrentDay: " + String.valueOf(currentDay().getMonthOfYear()) + " month: " + String.valueOf(month));
+
+        if( month == (currentDay().getMonthOfYear() - 1)){
+
+            Log.i("RECURR.DATA.ATUAL", "if: OK");
+
+            daysInMonth = currentDay().getDayOfMonth();
+
+            Log.i("RECURR.DATA.ATUAL", "DIas no Mes: " + String.valueOf(daysInMonth));
+
+            return daysInMonth;
+
+        } else {
+
+            int mes = 0;
+            int day = 1;
+
+            switch (month) {
+                case 0:
+                    mes = Calendar.JANUARY;
+                    break;
+                case 1:
+                    mes = Calendar.FEBRUARY;
+                    break;
+                case 2:
+                    mes = Calendar.MARCH;
+                    break;
+                case 3:
+                    mes = Calendar.APRIL;
+                    break;
+                case 4:
+                    mes = Calendar.MAY;
+                    break;
+                case 5:
+                    mes = Calendar.JUNE;
+                    break;
+                case 6:
+                    mes = Calendar.JULY;
+                    break;
+                case 7:
+                    mes = Calendar.AUGUST;
+                    break;
+                case 8:
+                    mes = Calendar.SEPTEMBER;
+                    break;
+                case 9:
+                    mes = Calendar.OCTOBER;
+                    break;
+                case 10:
+                    mes = Calendar.NOVEMBER;
+                    break;
+                case 11:
+                    mes = Calendar.DECEMBER;
+                    break;
+            }
+
+            Calendar mycal = new GregorianCalendar(year, mes, day);
+
+            daysInMonth = mycal.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+            return daysInMonth;
+        }
     }
 
 
@@ -162,11 +235,23 @@ public class RecurringDates {
         //+ ";BYMONTHDAY=13"  // that occurs on the 13th of the month
         //+ ";COUNT="+dias;  // stop after dias occurences
 
-        // Print out each date in the series.
+        nDiasRecorrencia = 0;
+
         for (LocalDate date :
                 LocalDateIteratorFactory.createLocalDateIterable(ical, start.plusDays(plusDay), true)) {
 
+
             Log.i("RRULE.DIAS.RECORRE: ", date.toString());
+
+            Log.i("RREULE.DIAS.RECORRE:", "date mês " + date.toString().substring(5, 7));
+
+            Log.i("RREULE.DIAS.RECORRE:", "diaSelecionado mês " + diaSelecionado.substring(5, 7));
+
+            if (date.toString().substring(5, 7).equals(diaSelecionado.substring(5, 7))) {
+
+                nDiasRecorrencia = nDiasRecorrencia + 1;
+            }
+
 
             if (date.toString().equals(diaSelecionado)) {
 
@@ -256,6 +341,14 @@ public class RecurringDates {
             }
         });
         */
+
+
         return check;
+    }
+
+
+    public static Integer getDiasRecorrencia() {
+
+        return nDiasRecorrencia;
     }
 }

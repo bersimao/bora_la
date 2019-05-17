@@ -31,28 +31,31 @@
         <ListView
             android:id="@+id/list_view_dias_semana"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
-        <!--BOTAO FLUTUANTE        <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/floatingActionButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    app:srcCompat="@android:drawable/ic_menu_add" />
-        -->
-
-        <Button
-            android:id="@+id/button_adicionar_novo_trajeto"
-            android:layout_width="wrap_content"
+<!-- BOTAO FLUTUANTE        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:background="@color/colorButton"
-            android:fontFamily="@font/nunito_regular"
-            android:textColor="@color/colorLetraBt"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_margin="@dimen/fab_margin"
-            android:layout_gravity="center_vertical"
-            android:text="Novo Trajeto" />
+            android:layout_gravity="right"
+            android:clickable="true"
+            android:fadingEdge="horizontal|vertical"
+            app:srcCompat="@android:drawable/ic_menu_add" /> -->
+
+
+          <Button
+              android:id="@+id/button_adicionar_novo_trajeto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="20dp"
+              android:fontFamily="@font/nunito_regular"
+              android:background="@drawable/round_corner_button"
+              android:textColor="@color/colorLetraBt"
+              style="?android:attr/buttonBarButtonStyle"
+              android:layout_margin="@dimen/fab_margin"
+              android:layout_gravity="center_vertical"
+              android:text="Novo Trajeto" />
 
 
     </LinearLayout>

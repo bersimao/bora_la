@@ -1,5 +1,6 @@
 package fatec.com.br.appprofangela;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,6 +20,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +33,10 @@ import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,11 +45,13 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
+import scala.util.parsing.json.JSON;
+
 // TELA DO DIA SELECIONADO NO CALENDÁRIO DO GRUPO DE CARONA
 public class CaronaDoDia extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    ArrayList<String> caroneirosList = new ArrayList<>();
+    private ArrayList<String> caroneirosList = new ArrayList<>();
 
     ArrayAdapter arrayAdapter;
 
@@ -55,6 +63,10 @@ public class CaronaDoDia extends AppCompatActivity
 
     Button buttonTrajetos;
 
+    private JSONArray jsonArray = new JSONArray();
+
+    //ProgressBar progressBar = new ProgressBar(this);
+
     //============== MÉTODOS DA GAVETA LATERAL ============= INÍCIO
     @Override
     public void onBackPressed() {
@@ -64,6 +76,9 @@ public class CaronaDoDia extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+
+        verificarDataAnterior();
+
     }
 
     @Override
@@ -129,9 +144,17 @@ public class CaronaDoDia extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawer_carona_do_dia);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_carona_do_dia);
+        Toolbar toolbar = findViewById(R.id.toolbar_carona_do_dia);
         setSupportActionBar(toolbar);
         setTitle("Bora-lá");
+
+        //progressBar.setContentDescription("Carregando");
+
+        //progressBar.setIndeterminate(false);
+
+        //progressBar.setClickable(false);
+
+        //progressBar.setVisibility(View.VISIBLE);
 
         final Intent intent = getIntent();
 
@@ -162,6 +185,12 @@ public class CaronaDoDia extends AppCompatActivity
 
         listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
 
+        calendarioDia = ano + mes + dia;
+
+        buttonTrajetos = findViewById(R.id.buttonTrajetosDoDia);
+
+        diaCarona.setText(dia + "/ " + mes + "/ " + ano);
+
         queryRecorrencias();
 
         //FORMA DE POPULAR OS CARONEIROS DO DIA SELECIONADO, COM TODOS OS CARONEIROS DO GRUPO DE CARONA.
@@ -169,96 +198,7 @@ public class CaronaDoDia extends AppCompatActivity
         //arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_multiple_choice, caroneirosList);
         //listView.setAdapter(arrayAdapter);
 
-        calendarioDia = ano + mes + dia;
-
-        buttonTrajetos = findViewById(R.id.buttonTrajetosDoDia);
-
-        diaCarona.setText(dia + "/ " + mes + "/ " + ano);
-
-        ParseObject dataId = ParseObject.createWithoutData("Calendario", DataId);
-
-        dataId.fetchInBackground(new GetCallback<ParseObject>() {
-            @Override
-            public void done(ParseObject object, ParseException e) {
-
-                if (object == null) {
-
-                    Log.i("BORALA_CarDoDia", " data null");
-                    ArrayList<String> vazio = new ArrayList<>();
-                    vazio.add("vazio");
-
-                    //ParseObject data = new ParseObject("Calendario");
-                    //data.put("data", calendarioDia);
-                    //data.saveInBackground();
-                    //data.put("pointerGrupoCarona", grupoAtivo);
-
-                    Log.i("BoraLa-CaronaDoDia", e.getMessage());
-                    //object.addUnique("naoFoi", vazio);
-                    //object.saveInBackground();
-                } else {
-
-                }
-
-                ParseObject grupoDoDia = ParseObject.createWithoutData("GrupoCarona", grupoAtivo);
-
-                ParseQuery<ParseObject> query = ParseQuery.getQuery("Calendario");
-
-                query.whereFullText("data", calendarioDia);
-
-                query.whereEqualTo("pointerGrupoCarona", grupoDoDia);
-
-                query.include("naoFoi");
-
-                query.getFirstInBackground(new GetCallback<ParseObject>() {
-                    @Override
-                    public void done(final ParseObject object, ParseException e) {
-
-                        if (e == null) {
-
-                            if (object == null) {
-
-                            } else {
-
-                                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                                        CheckedTextView checkedTextView = (CheckedTextView) view;
-
-                                        if (checkedTextView.isChecked()) {
-
-                                            //Log.i("BoraLaTeste", "Linha selecionada");
-                                            object.addAllUnique("naoFoi", Arrays.asList(caroneirosList.get(position)));
-                                            object.saveInBackground();
-
-                                        } else {
-
-                                            //Log.i("BoraLaTeste", "Linha desmarcada");
-                                            object.removeAll("naoFoi", Arrays.asList(caroneirosList.get(position)));
-                                            object.saveInBackground();
-
-                                        }
-                                    }
-                                });
-
-                                for (String username : caroneirosList) {
-
-                                    if (object.getList("naoFoi") != null) {
-                                        if (object.getList("naoFoi").contains(username)) {
-                                            listView.setItemChecked(caroneirosList.indexOf(username), true);
-                                        }
-                                    }
-                                }
-                            }
-
-                        } else {
-
-                            Log.i("BoraLa-CaronaDoDia", " e != null " + e.getMessage());
-                        }
-                    }
-                });
-            }
-        });
+        //ParseObject dataId = ParseObject.createWithoutData("Calendario", DataId);
 
         buttonTrajetos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -316,7 +256,7 @@ public class CaronaDoDia extends AppCompatActivity
 
                                 if (check) {
 
-                                    Toast.makeText(CaronaDoDia.this, "Objeto " + o.getObjectId() + " pertence a Recorrência! ", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(CaronaDoDia.this, "Objeto " + o.getObjectId() + " pertence a Recorrência! ", Toast.LENGTH_SHORT).show();
 
                                     List<ParseObject> trajetos = o.getList("arrayTrajetos");
 
@@ -335,9 +275,17 @@ public class CaronaDoDia extends AppCompatActivity
                                                 Log.i("TRAJ.DO.DIA.ARR", "participantesArray: " + participantesArray.toString());
 
                                                 for (int n = 0; n < participantesArray.size(); n++) {
+                                                    JSONObject json = new JSONObject();
                                                     participantesTrajetos.add(participantesArray.get(n));
+                                                    json.put("nome", participantesArray.get(n));
+                                                    json.put("distancia", trajetos.get(i).getNumber("distancia"));
+                                                    json.put("objectId", trajetos.get(i).getObjectId());
+                                                    json.put("Id", BaseActivity.dataSelecionadaCalendario );
+                                                    jsonArray.put(json);
+                                                    //Log.i("TRAJETO.JSON.NOME ",participantesArray.get(n) + " - " + String.valueOf(trajetos.get(i).getNumber("distancia")) );
                                                 }
                                             }
+                                            //Log.i("TRAJETO.JSON ",jsonArray.toString());
 
                                             Set<String> participantesUnicosTrajetos = new HashSet<>(participantesTrajetos);
 
@@ -345,10 +293,15 @@ public class CaronaDoDia extends AppCompatActivity
 
                                             setArrayListTrajetosDoDia(arrayListTemp);
 
+                                            setarStatusCaroneiro();
+
+                                            //progressBar.setVisibility(View.INVISIBLE);
+
+                                            findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+
                                             Log.i("TRAJ.DO.DIA.ARR", "arrayListTemp: " + arrayListTemp.toString());
 
                                         }
-
                                     }
 
                                 } else {
@@ -359,12 +312,18 @@ public class CaronaDoDia extends AppCompatActivity
                             } catch (java.text.ParseException e1) {
 
                                 e1.printStackTrace();
+                            } catch (JSONException e1) {
+                                e1.printStackTrace();
                             }
                         }
                     }
                 }
             }
         });
+    }
+
+    public ArrayList<String> getCaroneirosList() {
+        return caroneirosList;
     }
 
     public void setArrayListTrajetosDoDia(ArrayList<String> participantes) {
@@ -374,9 +333,233 @@ public class CaronaDoDia extends AppCompatActivity
             caroneirosList.add(participantes.get(i));
         }
 
+        Log.i("TESTE.CARONA.setArr", caroneirosList.toString());
+
         arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_multiple_choice, caroneirosList);
 
         listView.setAdapter(arrayAdapter);
+    }
 
+    public void setarStatusCaroneiro() {
+
+        ParseObject grupoDoDia = ParseObject.createWithoutData("GrupoCarona", grupoAtivo);
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Calendario");
+
+        query.whereFullText("data", calendarioDia);
+
+        query.whereEqualTo("pointerGrupoCarona", grupoDoDia);
+
+        query.include("naoFoi");
+
+        query.getFirstInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(final ParseObject objectData, ParseException e) {
+
+                if (e == null) {
+
+                    Log.i("TESTE.CARONA", "e == null");
+
+                    if (objectData != null) {
+
+                        if (objectData.getList("naoFoi") != null) {
+
+                            for (String username : caroneirosList) {
+
+                                Log.i("TESTE.CARONA", username);
+                                Log.i("TESTE.CARONA", "naoFoi != null");
+                                if (objectData.getList("naoFoi").contains(username)) {
+                                    Log.i("TESTE.CARONA", "Contém!");
+                                    listView.setItemChecked(caroneirosList.indexOf(username), true);
+                                }
+                            }
+
+                            Log.i("TESTE.CARONA", String.valueOf(objectData.getList("naoFoi").size()));
+                            Log.i("TESTE.CARONA.List", String.valueOf(caroneirosList.size()));
+
+                            Log.i("TESTE.CARONA", "object != null");
+
+                            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                    CheckedTextView checkedTextView = (CheckedTextView) view;
+
+                                    if (checkedTextView.isChecked()) {
+                                        //Log.i("BoraLaTeste", "Linha selecionada");
+
+                                        objectData.fetchIfNeededInBackground();
+                                        objectData.addAllUnique("naoFoi", Arrays.asList(caroneirosList.get(position)));
+
+                                        for(int i = 0; i < jsonArray.length(); i++){
+                                            try {
+
+                                                Log.i("naoFoi", jsonArray.getJSONObject(i).getString("nome"));
+
+                                                Log.i("naoFoi", jsonArray.getJSONObject(i).getString("nome") + (caroneirosList.get(position)));
+
+                                                if(jsonArray.getJSONObject(i).getString("nome").equals((caroneirosList.get(position)))){
+                                                    objectData.addAllUnique("naoFoiDistancia", Arrays.asList(jsonArray.getJSONObject(i).toString()));
+
+                                                }
+
+                                            } catch (JSONException e1) {
+                                                e1.printStackTrace();
+                                            }
+                                        }
+                                        //objectData.put("naoFoiDistancia", jsonArray);
+                                        Log.i("TRAJETO.JSON ", jsonArray.toString());
+                                        objectData.saveInBackground();
+
+                                    } else {
+                                        //Log.i("BoraLaTeste", "Linha desmarcada");
+                                        objectData.fetchIfNeededInBackground();
+                                        objectData.removeAll("naoFoi", Arrays.asList(caroneirosList.get(position)));
+
+                                        for(int i = 0; i < jsonArray.length(); i++){
+                                            try {
+
+                                                Log.i("naoFoi", jsonArray.getJSONObject(i).getString("nome"));
+
+                                                Log.i("naoFoi", jsonArray.getJSONObject(i).getString("nome") + (caroneirosList.get(position)));
+
+                                                if(jsonArray.getJSONObject(i).getString("nome").equals((caroneirosList.get(position)))){
+                                                    objectData.removeAll("naoFoiDistancia", Arrays.asList(jsonArray.getJSONObject(i).toString()));
+
+                                                }
+                                            } catch (JSONException e1) {
+                                                e1.printStackTrace();
+                                            }
+                                        }
+                                        objectData.saveInBackground();
+                                    }
+                                }
+                            });
+
+                        } else {
+
+                            Log.i("TESTE.CARONA.List", "objectData.getList('naoFoi') == null)");
+                        }
+                    } else {
+
+                        Log.i("TESTE.CARONA", "object == null");
+                    }
+                } else {
+
+                    Log.i("TESTE.CARONA", "e != null" + e.getMessage());
+
+                    ParseObject novaData = new ParseObject("Calendario");
+                    novaData.put("data", ano + mes + dia);
+                    novaData.put("anoMes", ano + mes);
+                    novaData.put("pointerGrupoCarona", grupoDoDia);
+
+                    novaData.saveInBackground();
+
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                            CheckedTextView checkedTextView = (CheckedTextView) view;
+
+                            novaData.fetchInBackground(new GetCallback<ParseObject>() {
+                                @Override
+                                public void done(ParseObject objectNovaData, ParseException e) {
+
+                                    if (checkedTextView.isChecked()) {
+
+                                        objectNovaData.fetchIfNeededInBackground();
+                                        //Log.i("BoraLaTeste", "Linha selecionada");
+                                        objectNovaData.addAllUnique("naoFoi", Arrays.asList(caroneirosList.get(position)));
+                                        //objectNovaData.put("naoFoiDistancia", jsonArray);
+
+                                        for(int i = 0; i < jsonArray.length(); i++){
+                                            try {
+
+                                                Log.i("naoFoi", jsonArray.getJSONObject(i).getString("nome"));
+
+                                                Log.i("naoFoi", jsonArray.getJSONObject(i).getString("nome") + (caroneirosList.get(position)));
+
+                                                if(jsonArray.getJSONObject(i).getString("nome").equals((caroneirosList.get(position)))){
+                                                    objectNovaData.addAllUnique("naoFoiDistancia", Arrays.asList(jsonArray.getJSONObject(i).toString()));
+                                                }
+                                            } catch (JSONException e1) {
+                                                e1.printStackTrace();
+                                            }
+                                        }
+
+                                        Log.i("CARONA.DO.DIA.JSON ", jsonArray.toString());
+                                        objectNovaData.saveInBackground();
+
+                                    } else {
+                                        //Log.i("BoraLaTeste", "Linha desmarcada");
+                                        objectNovaData.fetchIfNeededInBackground();
+                                        objectNovaData.removeAll("naoFoi", Arrays.asList(caroneirosList.get(position)));
+
+                                        for(int i = 0; i < jsonArray.length(); i++){
+                                            try {
+
+                                                Log.i("naoFoi", jsonArray.getJSONObject(i).getString("nome") + (caroneirosList.get(position)));
+
+                                                if(jsonArray.getJSONObject(i).getString("nome").equals((caroneirosList.get(position)))){
+                                                    objectNovaData.removeAll("naoFoiDistancia", Arrays.asList(jsonArray.getJSONObject(i).toString()));
+                                                }
+                                            } catch (JSONException e1) {
+                                                e1.printStackTrace();
+                                            }
+                                        }
+                                        objectNovaData.saveInBackground();
+                                    }
+                                }
+                            });
+                        }
+                    });
+                    Log.i("BoraLa-CaronaDoDia", " e != null " + e.getMessage());
+                }
+            }
+        });
+    }
+
+    public void verificarDataAnterior() {
+
+        Log.i("DIA.ATUAL.VER1.1", calendarioDia);
+
+        ParseObject grupoDoDia = ParseObject.createWithoutData("GrupoCarona", grupoAtivo);
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Calendario");
+
+        query.whereFullText("data", calendarioDia);
+
+        query.whereEqualTo("pointerGrupoCarona", grupoDoDia);
+
+        query.include("naoFoi");
+
+        query.getFirstInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject object, ParseException e) {
+
+                if (e == null) {
+
+                    Log.i("DIA.ATUAL.VER1", "e == null");
+
+                    if (object.getList("naoFoi") != null) {
+
+                        Log.i("DIA.ATUAL.VER1", "naoFoi != null");
+
+                        if (object.getList("naoFoi").isEmpty()) {
+
+                            Log.i("DIA.ATUAL.VER1", "naoFoi isEmpty");
+
+                            object.deleteInBackground();
+                        }
+
+                    } else {
+
+                        Log.i("DIA.ATUAL.VER1", "naoFoi == null");
+
+                        object.deleteInBackground();
+                    }
+                }
+            }
+        });
     }
 }

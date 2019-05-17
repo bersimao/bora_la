@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: com.android.volley:volley:1.1.1@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/573dfd82e13cee40e4af4a28327c953c/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/573dfd82e13cee40e4af4a28327c953c/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/47cf157f7b6a20446e2a53f49aaa4d5a/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/47cf157f7b6a20446e2a53f49aaa4d5a/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

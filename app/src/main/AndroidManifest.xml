@@ -8,6 +8,10 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+<!--    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> -->
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -16,16 +20,41 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TrajetosDoDia"></activity>
-        <activity android:name=".DiaSemanaSelecionado" />
+        <activity android:name=".TrajetosDoDia"
+            android:parentActivityName=".CaronaDoDia">
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".CaronaDoDia" />
+        </activity>
+        <activity android:name=".DiaSemanaSelecionado"
+            android:parentActivityName=".DiasSemana">
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".DiasSemana" />
+        </activity>
         <activity
             android:name=".Recorrencia"
             android:theme="@style/Theme.CaixaDialogo"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"
+            android:parentActivityName=".Trajetos">
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Trajetos" />
+        </activity>
         <activity
             android:name=".CaixaDialogo"
             android:theme="@style/Theme.CaixaDialogo"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"
+            android:parentActivityName=".Trajetos">
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Trajetos" />
+        </activity>
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -41,48 +70,120 @@
         <activity
             android:name=".Maps"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".DiasSemana" />
+        <activity android:name=".DiasSemana"
+            android:parentActivityName=".GrupoCarona">
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".GrupoCarona" />
+        </activity>
         <activity android:name=".Carregamento">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".Login"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:parentActivityName=".SplashCarregamento">
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SplashCarregamento" />
+        </activity>
         <activity
             android:name=".EsqueciSenha"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:parentActivityName=".Login">
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Login" />
+        </activity>
         <activity
             android:name=".Cadastro"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"
+            android:parentActivityName=".Login">
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Login" />
+        </activity>
         <activity
             android:name=".SplashCarregamento"
             android:screenOrientation="portrait" />
         <activity
             android:name=".NovoGrupo"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:parentActivityName=".GrupoCarona">
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".GrupoCarona" />
+        </activity>
         <activity
             android:name=".DiaAtual"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:parentActivityName=".GrupoCarona"
+            android:windowSoftInputMode="stateHidden">
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".GrupoCarona" />
+        </activity>
         <activity
             android:name=".CaronaDoDia"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:parentActivityName=".DiaAtual">
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".DiaAtual" />
+        </activity>
         <activity
             android:name=".GrupoCarona"
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            android:parentActivityName=".GrupoCarona">
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".GrupoCarona" />
+        </activity>
         <activity
             android:name=".Trajetos"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".AdicionaCaroneiro" />
-        <activity android:name=".CaroneiroIdaVolta" />
-        <activity android:name=".RelatorioDias" />
+            android:windowSoftInputMode="stateHidden"
+            android:parentActivityName=".DiasSemana">
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".DiasSemana" />
+        </activity>
+        <activity android:name=".AdicionaCaroneiro"
+            android:parentActivityName=".DiaAtual">
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".DiaAtual" />
+        </activity>
+        <activity android:name=".CaroneiroIdaVolta"
+            android:parentActivityName=".AdicionaCaroneiro">
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".AdicionaCaroneiro" />
+        </activity>
+        <activity android:name=".RelatorioDias"
+            android:parentActivityName=".DiaAtual">
+            <!-- The meta-data element is needed for versions lower than 4.1 -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".DiaAtual" />
+        </activity>
     </application>
 
 </manifest>

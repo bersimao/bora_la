@@ -30,6 +30,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SimpleAdapter;
@@ -47,9 +48,11 @@ import com.google.maps.GeoApiContext;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.TravelMode;
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -68,6 +71,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import scala.util.regexp.Base;
+
 //import scala.util.regexp.Base;
 
 public class Trajetos extends AppCompatActivity
@@ -80,15 +85,17 @@ public class Trajetos extends AppCompatActivity
     EditText editTextLocalInicial, editTextCalendario;
     Button buttonSalvarTrajetos, buttonCancelarTrajetos, buttonAdicionarDestino, buttonOutraRecorrencia;
     TextView textViewResumoRecorrencia;
-    ImageButton imgBtnPesqLocalInicial;
+    //ImageButton imgBtnPesqLocalInicial;
     ListView participantesListView;
     List<Map<String, String>> participantesData = new ArrayList<Map<String, String>>();
     ArrayList<String> byday = new ArrayList<>();
+    ArrayList<String> queryArrayNome = new ArrayList<>();
     ArrayAdapter arrayAdapterSpinner;
     SimpleAdapter simpleAdapter;
     RadioGroup radioGroupRecorrencia;
     RadioButton radioButton;
     Spinner dropdownMotoristas;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,7 +116,7 @@ public class Trajetos extends AppCompatActivity
         textViewResumoRecorrencia = findViewById(R.id.textView_resumo_recorrencia);
         buttonSalvarTrajetos = findViewById(R.id.button_salvar_trajetos);
         buttonCancelarTrajetos = findViewById(R.id.button_cancelar_trajetos);
-        imgBtnPesqLocalInicial = findViewById(R.id.imageButton_pesq_local_inicial);
+        //imgBtnPesqLocalInicial = findViewById(R.id.imageButton_pesq_local_inicial);
         buttonAdicionarDestino = findViewById(R.id.button_adicionar_destinos_participantes);
         buttonOutraRecorrencia = findViewById(R.id.button_outra_recorrencia);
         simpleAdapter = new SimpleAdapter(Trajetos.this, participantesData, android.R.layout.simple_list_item_2, new String[]{"participantes", "trajetos"}, new int[]{android.R.id.text1, android.R.id.text2});
@@ -119,6 +126,9 @@ public class Trajetos extends AppCompatActivity
         dropdownMotoristas = findViewById(R.id.spinner_motoristas_trajeto);
         arrayAdapterSpinner = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, spinnerMotoristas);
         dropdownMotoristas.setAdapter(arrayAdapterSpinner);
+        //progressBar = findViewById(R.id.loadingPanel);
+
+        //findViewById(R.id.loadingPanel).setVisibility(View.VISIBLE);
 
         if (BaseActivity.opcaoShowDialog == 1) {
 
@@ -146,22 +156,28 @@ public class Trajetos extends AppCompatActivity
 
         } else {
 
-            for (int i = 0; i < BaseActivity.participantesAA.size(); i++) {
+            for (int i = 0; i < BaseActivity.participantesAA.size(); i++) {  //ALTERAR AQUI!!!!!
 
                 Map<String, String> dataInfo = new HashMap<String, String>();
 
-                String s = BaseActivity.participantesAA.get(i).toString();
+                //queryObjectName(BaseActivity.participantesAA.get(i)); //queryObjectName(BaseActivity.participantesAA.get(i).toString())
+                //Log.i("TRAJETO2", BaseActivity.participantesAATemp.toString());
+                String s =  BaseActivity.participantesAA.get(i).toString(); // era String s = BaseActivity.participantesAA.get(i);
+                //Log.i("TRAJETO3", BaseActivity.participantesAATemp.toString());
+                //Log.i("TRAJETO", "I -> " + s);
 
                 dataInfo.put("participantes", s.substring(1, s.length() - 1)); //Remove as chaves "[]" do array convertido em string.
 
                 dataInfo.put("trajetos", BaseActivity.enderecoDestino.get(i));
 
                 participantesData.add(dataInfo);
+
+                BaseActivity.participantesAATemp.clear();
             }
             simpleAdapter.notifyDataSetChanged();
         }
 
-        imgBtnPesqLocalInicial.setOnClickListener(new View.OnClickListener() {
+        editTextLocalInicial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -287,8 +303,6 @@ public class Trajetos extends AppCompatActivity
 
                     String destiny = BaseActivity.enderecoDestino.get(0);
 
-                    String nameDestiny = BaseActivity.nomeDestino.get(0);
-
                     motorista = dropdownMotoristas.getSelectedItem().toString();
 
                     DirectionsResult results = getDirectionsDetails(origin, destiny, TravelMode.DRIVING);
@@ -296,12 +310,27 @@ public class Trajetos extends AppCompatActivity
                     Log.i("TRAJ.PARSE_INTERVAL", interval);
 
                     if (results != null) {
+                        progressBar.setVisibility(View.VISIBLE);
+
+                        /*
+                        progress = new ProgressBar(Trajetos.this);
+                        progress.setClickable(false);
+                        progress.setVisibility(View.VISIBLE);
+                        progress.isShown();*/
 
                         salvarTrajetos(results, origin, destiny);
 
                         Intent intent = new Intent(Trajetos.this, DiasSemana.class);
 
+                        //progress.setVisibility(View.GONE);
+
+                        //findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+
+                        progressBar.setVisibility(View.GONE);
+
                         startActivity(intent);
+
+                        finish();
 
                     } else {
 
@@ -310,6 +339,8 @@ public class Trajetos extends AppCompatActivity
                     }
                 }
             }
+
+
         });
 
         buttonCancelarTrajetos.setOnClickListener(new View.OnClickListener() {
@@ -323,8 +354,14 @@ public class Trajetos extends AppCompatActivity
                 BaseActivity.participantesTemp.clear();
 
                 BaseActivity.localInicial = "";
+
+                finish();
+
+
             }
         });
+
+
 
         //============== DRAWER ============= INÍCIO
 /*
@@ -385,6 +422,7 @@ public class Trajetos extends AppCompatActivity
                     Log.i("TRAJETOS_RECORR.PARSE", "Obj. Recorrencia Encontrado!");
 
                     ParseObject trajeto = new ParseObject("Trajetos");
+
 
                     trajeto.put("motorista", motorista);
                     trajeto.put("origemEnd", origin);
@@ -550,6 +588,7 @@ public class Trajetos extends AppCompatActivity
 */
     }
 
+
     private void updateLabel() {
 
         String myFormat = "dd/MM/yyyy";
@@ -609,9 +648,17 @@ public class Trajetos extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_trajetos);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+
         } else {
             super.onBackPressed();
         }
+
+        Intent intent = new Intent(Trajetos.this, DiasSemana.class);
+
+        startActivity(intent);
+
+        finish();
+
     }
 
     @Override
@@ -823,6 +870,7 @@ public class Trajetos extends AppCompatActivity
             }
         });
 */
+
     /**
      * if you want the dialog to be specific size, do the following
      * this will cover 85% of the screen (85% width and 85% height)
@@ -836,5 +884,31 @@ public class Trajetos extends AppCompatActivity
     }
 CAIXA DE DIALOGO -> FIM */
 
+
+
+    public void queryObjectName(ArrayList<String> id) {
+
+        for(int i = 0; i < id.size(); i++){
+
+            ParseQuery<ParseUser> query = ParseUser.getQuery();
+
+            query.whereEqualTo("objectId", id.get(i));
+
+            query.getFirstInBackground(new GetCallback<ParseUser>() {
+                @Override
+                public void done(ParseUser object, ParseException e) {
+                    if (e == null) {
+
+                        BaseActivity.participantesAATemp.add(object.getString("nome"));
+                        Log.i("TRAJETO1", BaseActivity.participantesAATemp.toString());
+
+                    } else {
+
+                        Log.i("ERRO.NOME.OBJETO", e.getMessage());
+                    }
+                }
+            });
+        }
+    }
 
 }

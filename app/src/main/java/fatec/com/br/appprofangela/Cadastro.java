@@ -40,7 +40,9 @@ public class Cadastro extends AppCompatActivity {
 
             ParseUser user = new ParseUser();
 
-            user.setUsername(nome.getText().toString());
+            user.setUsername(email.getText().toString());
+
+            user.put("nome", nome.getText().toString());
 
             user.put("sobrenome", sobrenome.getText().toString());
 

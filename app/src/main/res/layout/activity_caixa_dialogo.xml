@@ -17,7 +17,7 @@
             android:id="@+id/dialog_txtTitle"
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            android:text="Cadastro do Trajeto"
+            android:text="Cadastro do Destino e Participantes"
             android:textColor="@color/colorLetraTitulo"
             android:textSize="20dp"
             android:textStyle="bold"/>
@@ -29,18 +29,18 @@
 
             <EditText
                 android:id="@+id/dialog_edit_text_destino11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:ems="12"
-                android:hint="Pesquisar endereço"
+                android:hint="Endereço do Destino"
                 android:inputType="textPersonName" />
 
-            <ImageButton
+<!--            <ImageButton
                 android:id="@+id/dialog_button_pesquisa_dest11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="true"
-                android:src="@drawable/ic_menu_search" />
+                android:src="@drawable/ic_menu_search" /> -->
         </LinearLayout>
 
         <TextView
@@ -73,10 +73,10 @@
                 android:layout_gravity="center|center_horizontal"
                 android:layout_margin="15dp"
                 android:layout_weight="1"
-                android:background="@color/colorButton"
+                android:background="@drawable/round_corner_button"
+                android:textColor="@color/colorLetraBt"
                 android:fontFamily="@font/nunito_regular"
                 android:text="Cancelar"
-                android:textColor="@color/colorLetraBt"
                 style="?android:attr/buttonBarButtonStyle"/>
 
             <Button
@@ -86,7 +86,7 @@
                 android:layout_gravity="center|center_horizontal"
                 android:layout_margin="15dp"
                 android:layout_weight="1"
-                android:background="@color/colorButton"
+                android:background="@drawable/round_corner_button"
                 android:fontFamily="@font/nunito_regular"
                 android:foregroundGravity="center"
                 android:text="Salvar"

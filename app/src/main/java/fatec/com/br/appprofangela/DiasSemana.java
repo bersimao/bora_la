@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -41,7 +42,25 @@ public class DiasSemana extends AppCompatActivity {
         diasSemana.add("Sábado");
         diasSemana.add("Domingo");
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(DiasSemana.this, android.R.layout.simple_list_item_1, diasSemana);
+        //ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(DiasSemana.this, android.R.layout.simple_list_item_1, diasSemana);
+
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
+                (this, android.R.layout.simple_list_item_1, diasSemana){
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent){
+                // Get the current item from ListView
+                View view = super.getView(position,convertView,parent);
+
+                // Get the Layout Parameters for ListView Current Item View
+                ViewGroup.LayoutParams params = view.getLayoutParams();
+
+                // Set the height of the Item View
+                params.height = 205;
+                view.setLayoutParams(params);
+
+                return view;
+            }
+        };
 
         diasSemanaListView.setAdapter(arrayAdapter);
 
@@ -116,10 +135,10 @@ public class DiasSemana extends AppCompatActivity {
 
 
 
-// CÓDIGO PARA ADICIONAR O BOTÃO FLUTUANTE NESTE ACTIVITY
-/*
+// CÓDIGO PARA ADICIONAR O BOTÃO FLUTUANTE NESTA ACTIVITY
+
         //==============BOTÃO FLUTUANTE PARA ADICIONAR NOVOS TRAJETOS =============
-        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
+      /*  FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,5 +149,14 @@ public class DiasSemana extends AppCompatActivity {
         //==============BOTÃO FLUTUANTE PARA ADICIONAR NOVOS TRAJETOS =============
 */
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(DiasSemana.this, DiaAtual.class);
+
+        startActivity(intent);
+
+        finish();
     }
 }

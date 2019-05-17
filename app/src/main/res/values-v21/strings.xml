@@ -60,4 +60,10 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Configurações</string>
     <string name="title_activity_maps">Map</string>
+
+
+    <string name="relatorio_dias_titulo">Resultado das Caronas no Mês</string>
+
+
+
 </resources>

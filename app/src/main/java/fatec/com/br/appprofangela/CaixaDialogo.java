@@ -19,8 +19,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 //import scala.util.regexp.Base;
@@ -28,7 +34,9 @@ import java.util.List;
 public class CaixaDialogo extends AppCompatActivity {
 
     ArrayList<String> participantesArray = new ArrayList<>();
+    ArrayList<String> participantesId = new ArrayList<>();
     ArrayAdapter arrayAdapter;
+    ListView dialogListView;
     //StringBuilder sb = new StringBuilder(); //String Builder para a forma de armazenamento em uma única String. Não está sendo utilizado pois os participantes são inseridos num Array.
 
     @Override
@@ -44,8 +52,8 @@ public class CaixaDialogo extends AppCompatActivity {
 
         TextView dialogTextView = findViewById(R.id.dialog_txtTitle);
         EditText destino11 = findViewById(R.id.dialog_edit_text_destino11);
-        ListView dialogListView = findViewById(R.id.dialog_listView_participantes_trajeto);
-        ImageButton buttonEndereco = findViewById(R.id.dialog_button_pesquisa_dest11);
+        dialogListView = findViewById(R.id.dialog_listView_participantes_trajeto);
+        //ImageButton buttonEndereco = findViewById(R.id.dialog_button_pesquisa_dest11);
         Button buttonCancelar = findViewById(R.id.dialog_btnLeft);
         Button buttonSalvar = findViewById(R.id.dialog_btmRight);
 
@@ -54,13 +62,9 @@ public class CaixaDialogo extends AppCompatActivity {
             destino11.setText(BaseActivity.enderecoDestinoTemp);
         }
 
-        participantesArray = BaseActivity.caroneirosDoGrupo;
 
-        dialogListView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+        buscaCaroneirosGrupo(BaseActivity.grupoSelecionadoId);
 
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_multiple_choice, participantesArray);
-
-        dialogListView.setAdapter(arrayAdapter);
 
         dialogListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -70,16 +74,17 @@ public class CaixaDialogo extends AppCompatActivity {
 
                 if (checkedTextView.isChecked()){
 
-                    BaseActivity.participantesTemp.add(participantesArray.get(position));
+                    BaseActivity.participantesTemp.add(participantesArray.get(position)); //era participantesArray
+                    //Toast.makeText(CaixaDialogo.this, participantesArray.get(position), Toast.LENGTH_SHORT).show();
 
                 } else {
 
-                    BaseActivity.participantesTemp.remove(participantesArray.get(position));
+                    BaseActivity.participantesTemp.remove(participantesId.get(position));
                 }
             }
         });
 
-        buttonEndereco.setOnClickListener(new View.OnClickListener() {
+        destino11.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -181,5 +186,79 @@ public class CaixaDialogo extends AppCompatActivity {
         params.width = (screenWidth*widthPercent/100);
 
         this.getWindow().setAttributes(params);
+    }
+
+    public void buscaCaroneirosGrupo (String grupoId){
+
+        ParseQuery<ParseObject> queryGrupo = new ParseQuery<ParseObject>("GrupoCarona");
+
+        queryGrupo.include("usuariosGrupo");
+
+        queryGrupo.whereEqualTo("objectId", grupoId);
+
+        queryGrupo.getFirstInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject object, ParseException e) {
+
+                if(e == null){
+
+                    object.fetchIfNeededInBackground(new GetCallback<ParseObject>() {
+                        @Override
+                        public void done(ParseObject object, ParseException e) {
+
+                            if (e == null){
+
+                                List<ParseObject> usuariosGrupo = object.getList("usuariosGrupo");
+
+                                Collections.sort(usuariosGrupo, new Comparator<ParseObject>() { // COMPARAÇÃO DOS NOMES DOS USUÁRIOS PARA ORDENAÇÃO CRESCENTE
+                                    @Override
+                                    public int compare(ParseObject o1, ParseObject o2) {
+
+                                        String string1 = o1.getString("nome");
+                                        String string2 = o2.getString("nome");
+
+                                        return string1.compareToIgnoreCase(string2);
+                                    }
+                                });
+
+                                for(ParseObject o : usuariosGrupo){
+
+                                    participantesId.add(o.getObjectId());
+                                    participantesArray.add(o.getString("nome"));
+
+                                }
+
+                                setNameArrayLists(participantesArray);
+                            } else {
+                                Log.i("NameErro: ", e.getMessage());
+                            }
+                        }
+                    });
+                } else {
+                    Log.i("NameErro: ", e.getMessage());
+                }
+            }
+        });
+    }
+
+    public void setNameArrayLists(ArrayList<String> nomesParticipantes){
+
+        //participantesArray = BaseActivity.caroneirosDoGrupo;
+
+        dialogListView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+
+        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_multiple_choice, nomesParticipantes);
+
+        dialogListView.setAdapter(arrayAdapter);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(CaixaDialogo.this, Trajetos.class);
+
+        startActivity(intent);
+
+        finish();
     }
 }

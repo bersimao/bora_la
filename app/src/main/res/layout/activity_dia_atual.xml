@@ -9,49 +9,57 @@
     tools:context=".DiaAtual"
     tools:showIn="@layout/app_bar_dia_atual">
 
-
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/loadingPanel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        android:gravity="center" >
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fab_margin"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="20dp"
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/lg_borala_vetor_branco" />
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textViewDia"
-                android:layout_width="240dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="@string/diaatual_text_titulo"
-                android:textColor="@color/colorLetraTitulo"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="20dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/lg_borala_vetor_branco" />
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/textViewDia"
+                    android:layout_width="240dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/diaatual_text_titulo"
+                    android:textColor="@color/colorLetraTitulo"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
 
-        <Switch
+            <!--        <Switch
             android:id="@+id/Switch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,86 +72,142 @@
             android:text="@string/diaatual_text_perg"
             android:textOff="Sim"
             android:textOn="Não"
-            android:textSize="17sp" />
+            android:textSize="17sp" />  -->
 
 
-        <CalendarView
-            android:id="@+id/calendarView1"
-            android:layout_width="match_parent"
-            android:layout_height="330dp"
-            android:layout_weight="1"
-            android:paddingVertical="5dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:paddingBottom="5dp">
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:layout_gravity="bottom"
+                    android:layout_weight="1"
+                    android:paddingStart="15dp"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="5dp"
+                    android:text="Nome do Grupo"
+                    android:textColor="@color/colorLetraTitulo" />
 
-            <Button
-                android:id="@+id/buttonTrajetos"
-                android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="30dp">
+
+                    <EditText
+                        android:id="@+id/editText_nome_grupo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="textPersonName"
+                        android:paddingStart="5dp"
+                        android:textSize="20sp" />
+
+                    <ImageButton
+                        android:id="@+id/imageButton_edit"
+                        android:layout_width="50dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_vertical|end"
+                        android:layout_weight="1"
+                        android:scaleType="center" />
+                    <!--app:srcCompat="@drawable/edit_button_effect"-->
+
+
+                </LinearLayout>
+
+                <CalendarView
+                    android:id="@+id/calendarView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="330dp"
+                    android:layout_weight="1"
+                    android:paddingVertical="5dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@color/colorButton"
-                android:textColor="@color/colorLetraBt"
-                android:text="@string/diaatual_text_bt_traj" />
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:paddingBottom="5dp">
 
-            <Button
-                android:id="@+id/buttonMapas"
-                android:layout_width="wrap_content"
+                <Button
+                    android:id="@+id/buttonTrajetos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="2.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/round_corner_button"
+                    android:text="@string/diaatual_text_bt_traj"
+                    android:textColor="@color/colorLetraBt" />
+
+                <Button
+                    android:id="@+id/buttonMapas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2.5dp"
+                    android:layout_marginRight="2.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/round_corner_button"
+                    android:text="@string/diaatual_text_bt_mps"
+                    android:textColor="@color/colorLetraBt" />
+
+                <Button
+                    android:id="@+id/buttonRelatorio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/round_corner_button"
+                    android:text="@string/diaatual_text_bt_rel"
+                    android:textColor="@color/colorLetraBt" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@color/colorButton"
-                android:textColor="@color/colorLetraBt"
-                android:text="@string/diaatual_text_bt_mps" />
+                android:orientation="horizontal"
+                android:paddingBottom="5dp">
 
-            <Button
-                android:id="@+id/buttonRelatorio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                <TextView
+                    android:id="@+id/textViewCaroneiros"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:text="@string/diaatual_text_subtitulo"
+                    android:textColor="@color/colorLetraTitulo"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/button_adiciona_caroneiro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/round_corner_button"
+                    android:textColor="@color/colorLetraBt"
+                    android:text="Adicionar Caroneiros"
+                    android:textSize="15dp" />
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/ListaCaroneiros"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginBottom="20dp"
                 android:layout_weight="1"
-                android:background="@color/colorButton"
-                android:textColor="@color/colorLetraBt"
-                android:text="@string/diaatual_text_bt_rel" />
+                android:paddingBottom="10dp" />
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:paddingBottom="5dp">
-
-            <TextView
-                android:id="@+id/textViewCaroneiros"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_weight="1"
-                android:textColor="@color/colorLetraTitulo"
-                android:text="@string/diaatual_text_subtitulo"
-                android:textStyle="bold"
-                android:textSize="20dp" />
-
-            <Button
-                android:id="@+id/button_adiciona_caroneiro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@color/colorButton"
-                android:textColor="@color/colorLetraBt"
-                android:textSize="15dp"
-                android:text="Adicionar Caroneiros" />
-        </LinearLayout>
-
-        <ListView
-            android:id="@+id/ListaCaroneiros"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_weight="1" />
-    </LinearLayout>
+    </ScrollView>
 
 
 </android.support.constraint.ConstraintLayout>
