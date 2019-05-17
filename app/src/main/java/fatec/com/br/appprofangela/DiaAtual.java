@@ -75,9 +75,11 @@ public class DiaAtual extends AppCompatActivity
     String formattedDate;
     TextView dataAtual;
     EditText editTextNomeGrupo;
-    ImageButton imageButtonEdit;
-    Button botaoMaps, botaoTrajetos, botaoAdicionaCaroneiro, botaoRelatorio;
+    ImageButton imageButtonEdit, botaoAdicionaCaroneiro;
+    Button botaoMaps, botaoTrajetos, botaoRelatorio; //botaoAdicionaCaroneiro
     ListView caroneirosListView;
+
+
 
 
     boolean isPressed = false;
@@ -204,7 +206,9 @@ public class DiaAtual extends AppCompatActivity
 
         botaoRelatorio = findViewById(R.id.buttonRelatorio);
 
-        botaoAdicionaCaroneiro = findViewById(R.id.button_adiciona_caroneiro);
+        botaoAdicionaCaroneiro = findViewById(R.id.imageButton_adiciona_caroneiro);
+
+        //botaoAdicionaCaroneiro.setBackgroundResource(R.drawable.ic_add_button); //PARA O CASO DE SETAR O BACKGROUND DO BOTAO NO JAVA.
 
         caroneirosListView = findViewById(R.id.ListaCaroneiros);
 

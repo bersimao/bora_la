@@ -134,9 +134,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="horizontal"
-                android:padding="5dp"
-                android:paddingBottom="5dp">
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/buttonTrajetos"
@@ -172,23 +170,15 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:orientation="horizontal"
-                android:paddingBottom="5dp">
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/textViewCaroneiros"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="1"
-                    android:text="@string/diaatual_text_subtitulo"
-                    android:textColor="@color/colorLetraTitulo"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
 
-                <Button
+                <!--                <Button
                     android:id="@+id/button_adiciona_caroneiro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -196,7 +186,26 @@
                     android:background="@drawable/round_corner_button"
                     android:textColor="@color/colorLetraBt"
                     android:text="Adicionar Caroneiros"
-                    android:textSize="15dp" />
+                    android:textSize="15dp" /> -->
+
+                <TextView
+                    android:id="@+id/textViewCaroneiros"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/diaatual_text_subtitulo"
+                    android:textColor="@color/colorLetraTitulo"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/imageButton_adiciona_caroneiro"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="#00FFFFFF"
+                    android:scaleType="center"
+                    app:srcCompat="@drawable/edit_button_effect" />
+                <!-- app:srcCompat="@drawable/ic_add_button" /> -->
             </LinearLayout>
 
             <ListView
